@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>Svelte app</title>
+
+    <link rel="icon" type="image/png" href="/en/favicon.png" />
+    <link rel="stylesheet" href="/en/bundle.css" />
+
+    <script type="module" src="/en/index.js"></script>
+  </head>
+
+  <body>
+    <script
+      type="module"
+      src="https://unpkg.com/dimport?module"
+      data-main="/en/index.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/dimport/nomodule"
+      data-main="/en/index.js"
+    ></script>
+  </body>
+</html>
