@@ -25,7 +25,10 @@ SECRET_KEY = 'kf)&(a^&m#*8ki45s++84l!9db%1-f5z_5i21a(-cgbe+v3x-3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'chasbob.pythonanywhere.com',
+    '127.0.0.1'
+]
 
 
 # Application definition
