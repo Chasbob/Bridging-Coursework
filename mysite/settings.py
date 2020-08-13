@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'rest_framework',
     'frontend',
+    'updater',
 ]
 
 MIDDLEWARE = [
