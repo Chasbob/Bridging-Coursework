@@ -1,12 +1,12 @@
 import React from "react"
 import { useParams } from "react-router-dom"
-import fetcher from "../utils/fetcher"
+import { get } from "../utils/fetcher"
 
 import useSWR from "swr"
 
 export default function Post() {
   let { postId } = useParams()
-  const { data: post } = useSWR("/api/blog/" + postId, fetcher, {
+  const { data: post } = useSWR("/api/blog/" + postId, get, {
     revalidateOnMount: true,
   })
   if (!post) return "loading..."

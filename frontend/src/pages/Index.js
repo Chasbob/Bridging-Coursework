@@ -1,10 +1,10 @@
 import React from "react"
 import PostList from "../components/PostListing"
 import useSWR from "swr"
-import fetcher from "../utils/fetcher"
+import { get } from "../utils/fetcher"
 
 export default function Index() {
-  const { data: posts } = useSWR("/api/blog", fetcher, {
+  const { data: posts } = useSWR("/api/blog", get, {
     initialData: [],
     revalidateOnMount: true,
   })
