@@ -30,8 +30,8 @@ export default function Nav() {
         <div className={`navbar-menu ${active ? "is-active" : ""}`}>
             <div className="navbar-start"></div>
             <div className="navbar-end">
-                <a className="navbar-item" href="/_oauth/logout">
-                    Logout
+                <a className="navbar-item" href="/admin/">
+                    Login
                 </a>
             </div>
         </div>
