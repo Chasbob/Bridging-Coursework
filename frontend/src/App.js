@@ -1,18 +1,35 @@
 import React from "react"
 import "./App.scss"
-import { BrowserRouter as Router } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch,
+} from "react-router-dom"
 import { SWRConfig } from "swr"
 
 import Nav from "./components/Nav"
-import PostList from "./components/PostListing"
+import Hero from "./components/Hero"
+import Footer from "./components/Footer"
+import Index from "./pages/Index"
+import Post from "./pages/Post"
 
 export default function App() {
   const config = {}
   return (
     <SWRConfig value={config}>
       <Router>
-        <Nav />
-        <PostList/>
+        <Switch>
+          <Route exact path="/">
+            <Hero />
+            <Index />
+          </Route>
+          <Route path="/post/:postId">
+            <Nav />
+            <Post />
+            <Footer />
+          </Route>
+        </Switch>
       </Router>
     </SWRConfig>
   )

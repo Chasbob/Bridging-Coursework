@@ -3,9 +3,20 @@
 @import '~bulmaswatch/journal/variables';
 @import '~bulma/bulma';
 @import '~bulmaswatch/journal/overrides';
+@import "~@creativebulma/bulma-divider";
+
 
 .is-not-button {
   background: none !important;
   border: none;
   padding: 0 !important;
+}
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+#wrapper {
+  flex: 1;
 }

@@ -1,32 +1,10 @@
 import React from "react"
-import useSWR from "swr"
 
-import Post from "./Post"
+import PostPreview from "./PostThumb"
 
-const fetcher = url => fetch(url).then(r => r.json())
-
-export default function PostList() {
-  const { data: posts } = useSWR("/api/blog", fetcher,
-    {
-      initialData: [
-        {
-          "id": 1,
-          "title": "title",
-          "author": "me",
-          "text": "text"
-        }
-      ],
-      revalidateOnMount: true,
-    }
-  )
-
+export default function PostList({ posts }) {
   const postsView = posts.map(post => {
-    return (
-      <Post
-      key={post.id}
-      post={post}
-      />
-    )
+    return <PostPreview key={post.id} post={post} />
   })
-  return <div className="container">{postsView}</div>
+  return <div className="container py-4 px-4">{postsView}</div>
 }

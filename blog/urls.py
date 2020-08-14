@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
-    path('api/blog/', views.PostListCreate.as_view()),
+    re_path(r'^api/blog/$', views.post_list),
+    re_path(r'^api/blog/(?P<pk>[0-9]+)/$', views.post_detail)
 ]
