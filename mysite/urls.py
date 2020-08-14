@@ -20,5 +20,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
     path('', include('frontend.urls')),
-    path('update_server/', include('updater.urls')),
 ]
