@@ -41,13 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'livereload',
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
     'blog.apps.BlogConfig',
     'frontend',
 ]
+if DEBUG:
+    INSTALLED_APPS.append('livereload')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,8 +60,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'livereload.middleware.LiveReloadScript',
 ]
+if DEBUG:
+    MIDDLEWARE.append('livereload.middleware.LiveReloadScript')
 
 ROOT_URLCONF = 'mysite.urls'
 
