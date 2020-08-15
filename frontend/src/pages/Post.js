@@ -6,7 +6,7 @@ import useSWR from "swr"
 
 export default function Post() {
   let { postId } = useParams()
-  const { data: post } = useSWR("/api/blog/" + postId, get, {
+  const { data: post } = useSWR(`/api/blog/${postId}`, get, {
     revalidateOnMount: true,
   })
   if (!post) return "loading..."

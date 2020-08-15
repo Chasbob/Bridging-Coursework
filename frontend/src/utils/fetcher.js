@@ -1,9 +1,69 @@
 const API_BASE = process.env.REACT_APP_API_BASE
   ? process.env.REACT_APP_API_BASE
   : ""
-const fetcher = (url, method) =>
-  fetch(`${API_BASE}${url}/`, { method: method }).then(r => r.json())
-const get = url => fetcher(url, "GET")
-const post = url => fetcher(url, "POST")
 
-export { get, post }
+function url(endpoint) {
+  return process.env.REACT_APP_API_HOST
+    ? new URL(process.env.REACT_APP_API_HOST + endpoint).href
+    : endpoint
+}
+
+export async function get(endpoint) {
+  let resp = await fetch(url(endpoint))
+
+  if (resp.ok) {
+    let json = await resp.json()
+    return json
+  } else {
+    throw new APIException(resp)
+  }
+}
+
+export async function post(endpoint, content) {
+  let resp = await fetch(url(endpoint), {
+    method: "POST",
+    body: JSON.stringify(content),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+  })
+  if (resp.ok) {
+    let json = await resp.json()
+    return json
+  } else {
+    throw new APIException(resp)
+  }
+}
+
+export async function put(endpoint, content) {
+  let resp = await fetch(url(endpoint), {
+    method: "PUT",
+    body: JSON.stringify(content),
+    redirect: "follow",
+  })
+  if (resp.ok) {
+    let json = await resp.json()
+    return json
+  } else {
+    throw new APIException(resp)
+  }
+}
+
+export async function remove(endpoint) {
+  let resp = await fetch(url(endpoint), {
+    method: "DELETE",
+    credentials: "include",
+  })
+  if (resp.ok) {
+    let json = await resp.json()
+    return json
+  } else {
+    throw new APIException(resp)
+  }
+}
+
+function APIException(response) {
+  this.response = response
+}

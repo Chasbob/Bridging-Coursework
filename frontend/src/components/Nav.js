@@ -9,7 +9,7 @@ export default function Nav() {
   }
 
   return (
-    <nav className={`hero navbar is-primary is-bold`}>
+    <nav className={`hero navbar is-medium is-primary is-bold`}>
       <div className="container">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
@@ -30,9 +30,9 @@ export default function Nav() {
         <div className={`navbar-menu ${active ? "is-active" : ""}`}>
           <div className="navbar-start"></div>
           <div className="navbar-end">
-            {/* <a className="navbar-item" href="/admin/">
-                    Login
-                </a> */}
+            <Link className="navbar-item" to="/manage">
+              <span className="subtitle has-text-white">Login</span>
+            </Link>
           </div>
         </div>
       </div>

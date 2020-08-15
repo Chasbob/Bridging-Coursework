@@ -1,11 +1,6 @@
 import React from "react"
 import "./App.scss"
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useRouteMatch,
-} from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import { SWRConfig } from "swr"
 
 import Nav from "./components/Nav"
@@ -13,6 +8,7 @@ import Hero from "./components/Hero"
 import Footer from "./components/Footer"
 import Index from "./pages/Index"
 import Post from "./pages/Post"
+import Admin from "./pages/Admin"
 
 export default function App() {
   const config = {}
@@ -21,12 +17,22 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path="/">
+            <Nav />
             <Hero />
             <Index />
           </Route>
-          <Route path="/post/:postId">
+          <Route exact path="/manage">
             <Nav />
-            <Post />
+            <div class="main">
+              <Admin />
+            </div>
+            <Footer />
+          </Route>
+          <Route path="/:postId">
+            <Nav />
+            <div className="main">
+              <Post />
+            </div>
             <Footer />
           </Route>
         </Switch>

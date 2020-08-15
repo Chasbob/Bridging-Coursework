@@ -1,9 +1,9 @@
-const path = require('path');
+const path = require("path")
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, 'static'),
-    filename: 'frontend/main.js'
+    filename: "main.js",
+    path: path.resolve(__dirname, "static", "frontend"),
   },
   module: {
     rules: [
@@ -30,52 +30,8 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
 }
-
-// const path = require('path');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
-// module.exports = {
-//   entry: './src/index.js',
-//   output: {
-//     path: path.resolve(__dirname, 'static'),
-//     filename: 'frontend/main.js'
-//   },
-//   module: {
-//     rules: [
-//       {
-//         test: /\.m?js$/,
-//         exclude: /(node_modules|bower_components)/,
-//         use: {
-//           loader: "babel-loader",
-//           options: {
-//             presets: ["@babel/preset-env"],
-//           },
-//         },
-//       },
-//       {
-//       test: /\.scss$/,
-//       use: [
-//           MiniCssExtractPlugin.loader,
-//           {
-//             loader: 'css-loader'
-//           },
-//           {
-//             loader: 'sass-loader',
-//             options: {
-//               sourceMap: true,
-//               // options...
-//             }
-//           }
-//         ]
-//     }
-//   ]
-//   },
-//   plugins: [
-//     new MiniCssExtractPlugin(),
-//   ]
-// };
