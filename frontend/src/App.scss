@@ -1,22 +1,57 @@
 @charset "utf-8";
 
+$footer-padding: 3rem 1.5rem 3rem;
+$footer-color: true;
 @import '~bulmaswatch/journal/variables';
 @import '~bulma/bulma';
 @import '~bulmaswatch/journal/overrides';
 @import "~@creativebulma/bulma-divider";
 
 
-.is-not-button {
-  background: none !important;
-  border: none;
-  padding: 0 !important;
-}
-body {
+#root {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
 
-#wrapper {
+.is-not-button {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+}
+
+.main {
   flex: 1;
+}
+
+.grid {
+  $grid-gap: 1rem;
+
+  display: grid;
+  gap: $grid-gap;
+  
+  .grid-item {
+    & > * {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+@include mobile {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include tablet {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@include desktop {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
