@@ -1,9 +1,12 @@
+import logging
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
 from .models import Post
 from .serializers import *
+
+logger = logging.getLogger(__name__)
 
 @api_view(['GET', 'POST'])
 def post_list(request):
@@ -18,7 +21,7 @@ def post_list(request):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -35,7 +38,7 @@ def post_detail(request, pk):
 
 
     if request.method == 'PUT':
-        serializer = PostSerializer(student, data=request.data,context={'request': request})
+        serializer = PostSerializer(student, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
