@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { Dropdown, DropdownItem, DropdownDivider } from "./Dropdown"
 import { Link } from "react-router-dom"
+import { remove } from "../utils/fetcher"
+import { mutate } from "swr"
 import Truncate from "react-truncate"
 
 export default function CRUD({ post }) {
@@ -12,6 +14,12 @@ export default function CRUD({ post }) {
       <a className="card-footer-item">Edit</a>
     </div>
   )
+
+  const handleDelete = async () => {
+    await remove(`/api/blog/${post.id}/`)
+    mutate("/api/blog/")
+  }
+
   return (
     <div className="grid-item">
       <div className="card">
@@ -23,7 +31,7 @@ export default function CRUD({ post }) {
           </p>
           <div className="card-header-icon">
             <Dropdown right={true}>
-              <DropdownItem>Delete</DropdownItem>
+              <DropdownItem onClick={handleDelete}>Delete</DropdownItem>
             </Dropdown>
           </div>
         </div>
