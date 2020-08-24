@@ -1,10 +1,6 @@
-const API_BASE = process.env.REACT_APP_API_BASE
-  ? process.env.REACT_APP_API_BASE
-  : ""
-
 function url(endpoint) {
   return process.env.REACT_APP_API_HOST
-    ? new URL(process.env.REACT_APP_API_HOST + endpoint).href
+    ? new URL(endpoint, process.env.REACT_APP_API_HOST).href
     : endpoint
 }
 
@@ -54,7 +50,6 @@ export async function put(endpoint, content) {
 export async function remove(endpoint) {
   let resp = await fetch(url(endpoint), {
     method: "DELETE",
-    credentials: "include",
   })
   if (resp.ok) {
     let json = await resp.json()

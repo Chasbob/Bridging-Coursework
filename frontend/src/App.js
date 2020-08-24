@@ -23,7 +23,7 @@ export default function App() {
           </Route>
           <Route exact path="/manage">
             <Nav />
-            <div class="main">
+            <div className="main">
               <Admin />
             </div>
             <Footer />

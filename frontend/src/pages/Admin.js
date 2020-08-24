@@ -1,17 +1,16 @@
 import React, { useState } from "react"
-import PostList from "../components/PostListing"
 import useSWR, { mutate } from "swr"
 import { get, post } from "../utils/fetcher"
 import CRUD from "../components/CRUD"
 import { FaPlusCircle } from "react-icons/fa"
 
 export default function Admin() {
-  const { data: posts } = useSWR("/api/blog", get, {
+  const { data: posts } = useSWR("/api/blog/", get, {
     initialData: [],
     revalidateOnMount: true,
   })
-  const cruds = posts.map(post => {
-    return <CRUD key={post.id} post={post} />
+  const cruds = posts.map(item => {
+    return <CRUD key={item.id} post={item} />
   })
 
   const [modalActive, setModalActive] = useState(false)
@@ -24,7 +23,6 @@ export default function Admin() {
   }
 
   const handleModalSubmit = async form => {
-    console.log(form)
     await post("/api/blog/", form)
     mutate("/api/blog/")
     setModalActive(false)
@@ -129,21 +127,6 @@ function NewPostModal({ onCreate, onClose }) {
                 onChange={handleInputChange}
               />
             </div>
-          </div>
-          <div className="field">
-            <label className="label">Author</label>
-            <select
-              name="author"
-              className="input"
-              onChange={handleInputChange}
-            >
-              <option key="me" value="1">
-                chasbob
-              </option>
-              <option key="mee" value="chasbob">
-                chasbob
-              </option>
-            </select>
           </div>
 
           <div className="field">
