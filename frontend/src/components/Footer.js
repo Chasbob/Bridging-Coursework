@@ -1,6 +1,7 @@
 import React from "react"
 
 import Breadcrumb from "./Breadcrumb"
+import Login from "./Login"
 
 export default function Footer() {
   return (
@@ -8,9 +9,10 @@ export default function Footer() {
       <div className="container">
         <div className="level">
           <div className="level-left">
-      <Breadcrumb />
+            <Breadcrumb />
           </div>
           <div className="level-right">
+            <Login />
           </div>
         </div>
       </div>
