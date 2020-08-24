@@ -46,5 +46,5 @@ def post_detail(request, pk):
 
     elif request.method == 'DELETE':
         student.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(data={}, status=status.HTTP_202_ACCEPTED)
 
