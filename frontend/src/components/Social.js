@@ -7,30 +7,30 @@ import { AiOutlineMail } from "react-icons/ai"
 export default function Social() {
   return (
     <nav className="panel">
-      <p class="panel-heading">Links</p>
-      <a class="panel-block is-active" href="https://github.com/Chasbob">
-        <span class="panel-icon">
+      <p className="panel-heading">Links</p>
+      <a className="panel-block is-active" href="https://github.com/Chasbob">
+        <span className="panel-icon">
           <DiGithub />
         </span>
         GitHub
       </a>
       <a
-        class="panel-block is-active"
+        className="panel-block is-active"
         href="https://www.linkedin.com/in/charles-de-freitas/"
       >
-        <span class="panel-icon">
+        <span className="panel-icon">
           <FaLinkedin />
         </span>
         Linkedin
       </a>
-      <a class="panel-block is-active" href="https://twitter.com/chasbob97">
-        <span class="panel-icon">
+      <a className="panel-block is-active" href="https://twitter.com/chasbob97">
+        <span className="panel-icon">
           <FaTwitter />
         </span>
         Twitter
       </a>
-      <a class="panel-block is-active" href="mailto:charles@defreitas.io">
-        <span class="panel-icon">
+      <a className="panel-block is-active" href="mailto:charles@defreitas.io">
+        <span className="panel-icon">
           <AiOutlineMail />
         </span>
         Email

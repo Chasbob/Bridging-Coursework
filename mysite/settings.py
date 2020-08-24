@@ -28,8 +28,7 @@ DEBUG = os.getenv('DEBUG') is not None
 
 ALLOWED_HOSTS = [
     'chasbob.pythonanywhere.com',
-    '127.0.0.1',
-    'localhost'
+    '*' if DEBUG else '',
 ]
 
 
@@ -41,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'livereload' if DEBUG else '',
     'django.contrib.staticfiles',
 
     'rest_framework',
@@ -52,8 +52,6 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'frontend',
 ]
-if DEBUG:
-    INSTALLED_APPS.append('livereload')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,9 +63,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'livereload.middleware.LiveReloadScript' if DEBUG else ''
 ]
-if DEBUG:
-    MIDDLEWARE.append('livereload.middleware.LiveReloadScript')
 
 ROOT_URLCONF = 'mysite.urls'
 

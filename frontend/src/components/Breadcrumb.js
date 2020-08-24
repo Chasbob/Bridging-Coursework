@@ -41,6 +41,8 @@ export default function Breadcrumb() {
           </li>
         )
       }
+    } else {
+      return ""
     }
   })
 
