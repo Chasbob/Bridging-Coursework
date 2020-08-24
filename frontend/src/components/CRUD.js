@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Dropdown, DropdownItem, DropdownDivider } from "./Dropdown"
 import { Link } from "react-router-dom"
+import Truncate from "react-truncate"
 
 export default function CRUD({ post }) {
   let controls = (
@@ -15,7 +16,11 @@ export default function CRUD({ post }) {
     <div className="grid-item">
       <div className="card">
         <div className="card-header">
-          <p className="card-header-title">{post.title}</p>
+          <p className="card-header-title">
+            <Truncate lines={1} ellipsis={<span>...</span>}>
+              {post.title}
+            </Truncate>
+          </p>
           <div className="card-header-icon">
             <Dropdown right={true}>
               <DropdownItem>Delete</DropdownItem>
