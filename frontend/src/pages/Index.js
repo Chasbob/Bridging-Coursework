@@ -1,18 +1,17 @@
 import React from "react"
-import PostList from "../components/PostListing"
-import useSWR from "swr"
-import { get } from "../utils/fetcher"
-
+import Social from "../components/Social"
 export default function Index() {
-  const { data: posts } = useSWR("/api/blog/", get, {
-    initialData: [],
-    revalidateOnMount: true,
-  })
-
   return (
     <section className="section">
       <div className="container">
-        <PostList posts={posts} />
+        <div className="level">
+          <div className="level-left">
+            <p>Some bits about me.</p>
+          </div>
+          <div className="level-right">
+            <Social />
+          </div>
+        </div>
       </div>
     </section>
   )

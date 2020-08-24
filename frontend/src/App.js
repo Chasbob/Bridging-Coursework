@@ -9,6 +9,7 @@ import Footer from "./components/Footer"
 import Index from "./pages/Index"
 import Post from "./pages/Post"
 import Admin from "./pages/Admin"
+import Blog from "./pages/Blog"
 
 export default function App() {
   const config = {}
@@ -16,18 +17,19 @@ export default function App() {
     <SWRConfig value={config}>
       <Router>
         <div className="main">
+          <Nav />
           <Switch>
             <Route exact path="/">
-              <Nav />
               <Hero />
               <Index />
             </Route>
             <Route exact path="/manage">
-              <Nav />
               <Admin />
             </Route>
+            <Route exact path="/blog">
+              <Blog />
+            </Route>
             <Route path="/:postId">
-              <Nav />
               <Post />
             </Route>
           </Switch>

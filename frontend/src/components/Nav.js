@@ -12,9 +12,6 @@ export default function Nav() {
     <nav className="hero navbar is-medium is-primary is-bold">
       <div className="container">
         <div className="navbar-brand">
-          <Link className="navbar-item" to="/">
-            <span className="subtitle has-text-white">Blog</span>
-          </Link>
           <button
             className={`navbar-burger is-not-button ${
               active ? "is-active" : ""
@@ -30,6 +27,12 @@ export default function Nav() {
         <div className={`navbar-menu ${active ? "is-active" : ""}`}>
           <div className="navbar-start"></div>
           <div className="navbar-end">
+            <Link className="navbar-item" to="/">
+              <span className="subtitle has-text-white">Home</span>
+            </Link>
+            <Link className="navbar-item" to="/blog">
+              <span className="subtitle has-text-white">Blog</span>
+            </Link>
             <Link className="navbar-item" to="/manage">
               <span className="subtitle has-text-white">Manage</span>
             </Link>
