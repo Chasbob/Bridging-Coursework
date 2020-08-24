@@ -4,7 +4,7 @@ import useSWR from "swr"
 import { get } from "../utils/fetcher"
 
 export default function Index() {
-  const { data: posts } = useSWR("/api/blog", get, {
+  const { data: posts } = useSWR("/api/blog/", get, {
     initialData: [],
     revalidateOnMount: true,
   })

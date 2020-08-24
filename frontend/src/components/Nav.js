@@ -9,7 +9,7 @@ export default function Nav() {
   }
 
   return (
-    <nav className={`hero navbar is-medium is-primary is-bold`}>
+    <nav className="hero navbar is-medium is-primary is-bold">
       <div className="container">
         <div className="navbar-brand">
           <Link className="navbar-item" to="/">
@@ -31,7 +31,7 @@ export default function Nav() {
           <div className="navbar-start"></div>
           <div className="navbar-end">
             <Link className="navbar-item" to="/manage">
-              <span className="subtitle has-text-white">Login</span>
+              <span className="subtitle has-text-white">Manage</span>
             </Link>
           </div>
         </div>

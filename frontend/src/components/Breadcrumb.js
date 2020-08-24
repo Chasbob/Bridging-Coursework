@@ -18,10 +18,11 @@ export default function Breadcrumb() {
       </Link>
     </li>
   )
-  parts.push(
-    path.split("/").map((part, index) => {
-      if (part != "")
-        return (
+
+  path.split("/").map((part, index) => {
+    if (part !== "") {
+      if (index !== path.split("/").length - 1) {
+        parts.push(
           <li key={part}>
             <Link
               to={path
@@ -33,12 +34,23 @@ export default function Breadcrumb() {
             </Link>
           </li>
         )
-    })
-  )
+      } else {
+        parts.push(
+          <li key={part}>
+            <span className="mx-2">{part}</span>
+          </li>
+        )
+      }
+    }
+  })
 
-  return (
-    <nav className="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
-      <ul>{parts}</ul>
-    </nav>
-  )
+  if (parts.length > 1) {
+    return (
+      <nav className="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+        <ul>{parts}</ul>
+      </nav>
+    )
+  } else {
+    return <div></div>
+  }
 }

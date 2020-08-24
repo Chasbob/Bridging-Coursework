@@ -15,27 +15,24 @@ export default function App() {
   return (
     <SWRConfig value={config}>
       <Router>
-        <Switch>
-          <Route exact path="/">
-            <Nav />
-            <Hero />
-            <Index />
-          </Route>
-          <Route exact path="/manage">
-            <Nav />
-            <div className="main">
+        <div className="main">
+          <Switch>
+            <Route exact path="/">
+              <Nav />
+              <Hero />
+              <Index />
+            </Route>
+            <Route exact path="/manage">
+              <Nav />
               <Admin />
-            </div>
-            <Footer />
-          </Route>
-          <Route path="/:postId">
-            <Nav />
-            <div className="main">
+            </Route>
+            <Route path="/:postId">
+              <Nav />
               <Post />
-            </div>
-            <Footer />
-          </Route>
-        </Switch>
+            </Route>
+          </Switch>
+        </div>
+        <Footer />
       </Router>
     </SWRConfig>
   )

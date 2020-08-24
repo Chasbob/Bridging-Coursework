@@ -1,7 +1,5 @@
 @charset "utf-8";
 
-$footer-padding: 3rem 1.5rem 3rem;
-$footer-color: true;
 @import '~bulmaswatch/journal/variables';
 @import '~bulma/bulma';
 @import '~bulmaswatch/journal/overrides';
@@ -29,7 +27,7 @@ $footer-color: true;
 
   display: grid;
   gap: $grid-gap;
-  
+
   .grid-item {
     & > * {
       width: 100%;
