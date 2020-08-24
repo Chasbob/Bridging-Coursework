@@ -15,44 +15,44 @@ export async function get(endpoint) {
   }
 }
 
-export async function post(endpoint, content) {
-  let resp = await fetch(url(endpoint), {
-    method: "POST",
-    body: JSON.stringify(content),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    redirect: "follow",
-  })
-  if (resp.ok) {
-    let json = await resp.json()
-    return json
-  } else {
-    throw new APIException(resp)
-  }
+export async function post(endpoint, content, token) {
+  return fetcher(endpoint, content, "POST", token)
 }
 
-export async function put(endpoint, content) {
-  let resp = await fetch(url(endpoint), {
-    method: "PUT",
-    body: JSON.stringify(content),
-    redirect: "follow",
-  })
-  if (resp.ok) {
-    let json = await resp.json()
-    return json
-  } else {
-    throw new APIException(resp)
-  }
+export async function put(endpoint, content, token) {
+  return fetcher(endpoint, content, "PUT", token)
 }
 
-export async function remove(endpoint) {
+export async function remove(endpoint, token) {
+  return fetcher(endpoint, {}, "DELETE", token)
+}
+
+async function fetcher(endpoint, content, method, token) {
+  let headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  }
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
   let resp = await fetch(url(endpoint), {
-    method: "DELETE",
+    method: method,
+    body: JSON.stringify(content),
+    redirect: "follow",
+    credentials: "same-origin",
+    headers: headers,
   })
   if (resp.ok) {
-    let json = await resp.json()
+    let json = await resp
+      .text()
+      .then(t => {
+        return JSON.parse(t)
+      })
+      .catch(t => {
+        console.error(t)
+        return {}
+      })
     return json
   } else {
     throw new APIException(resp)

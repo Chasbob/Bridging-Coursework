@@ -18,6 +18,10 @@ livereload:
 frontend-build:
 	cd ./frontend && yarn run build
 
+.PHONY: frontend-dev
+frontend-dev:
+	cd ./frontend && yarn run dev
+
 .PHONY: frontend
 frontend:
 	cd ./frontend && \
