@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'blog.apps.BlogConfig',
     'frontend',
+    'cv',
 ]
 if DEBUG:
     INSTALLED_APPS.insert(5, 'livereload')
