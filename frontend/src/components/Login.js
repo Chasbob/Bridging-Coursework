@@ -1,11 +1,11 @@
 import React, { useState } from "react"
-import { post } from "../utils/fetcher"
+import fetcher from "../utils/fetcher"
 import { useCookies } from "react-cookie"
 
-export default function Login() {
-  const [cookies, setCookie] = useCookies(["token"])
+export default function Login({authenticated, setAuthenticated}) {
+  const [cookies, setCookie, removeCookie] = useCookies(["access"])
   const [modalActive, setModalActive] = useState(false)
-  const [notification, setNotification] = useState("")
+  const [notification, setNotification] = useState(false)
   const handleModalOpen = () => {
     setModalActive(true)
   }
@@ -14,19 +14,31 @@ export default function Login() {
     setModalActive(false)
   }
 
-  const handelModalSubmit = async form => {
-    await post("api-auth/login/", form, false)
-      .then(resp => {
-        setCookie("access_token", resp.access_token)
-        setCookie("refresh_token", resp.refresh_token)
-        setCookie("user", resp.user)
-        setModalActive(false)
-      })
-      .catch(e => {
-        console.error(e)
-      })
+  const handelLogout = () => {
+    removeCookie("access")
+    setAuthenticated(false)
   }
 
+  const handelModalSubmit = async form => {
+    setNotification(null)
+    await fetcher("api-auth/login/", "POST", form, false)
+      .then(json => {
+        setCookie("access", json, { sameSite: "strict", maxAge: "2592000" })
+        setAuthenticated(true)
+        setModalActive(false)
+      })
+      .catch(e => console.error(e))
+  }
+
+  if (authenticated) {
+    return (
+      <div>
+        <a className="is-link" onClick={handelLogout}>
+          Logout
+        </a>
+      </div>
+    )
+  }
   return (
     <div>
       <a className="is-link" onClick={handleModalOpen}>
@@ -37,13 +49,14 @@ export default function Login() {
           onSubmit={handelModalSubmit}
           onClose={handleModalClose}
           notification={notification}
+          setNotification={setNotification}
         />
       )}
     </div>
   )
 }
 
-function LoginForm({ onSubmit, onClose, notification }) {
+function LoginForm({ onSubmit, onClose, notification, setNotification }) {
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -56,6 +69,10 @@ function LoginForm({ onSubmit, onClose, notification }) {
     }
   }
 
+  const handelNotificationClose = () => {
+    setNotification(false)
+  }
+
   const handleInputChange = event => {
     setForm({ ...form, [event.target.name]: event.target.value })
   }
@@ -66,7 +83,7 @@ function LoginForm({ onSubmit, onClose, notification }) {
       <div className="modal-content">
         {notification && (
           <div className="notification is-danger">
-            <div className="delete" />
+            <button className="delete" onClick={handelNotificationClose} />
             <p>{notification}</p>
           </div>
         )}
