@@ -1,6 +1,11 @@
 import React, { useState } from "react"
 import "./App.scss"
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom"
 import { SWRConfig } from "swr"
 import { useCookies } from "react-cookie"
 
@@ -19,26 +24,24 @@ export default function App() {
     cookies.access !== undefined ? true : false
   )
   const manage = () => {
-    if(authenticated){
-      return <Admin/>
-    }else{
-      return <Redirect to="/"/>
+    if (authenticated) {
+      return <Admin />
+    } else {
+      return <Redirect to="/" />
     }
   }
   return (
     <SWRConfig value={config}>
       <Router>
         <div className="main">
-          <Nav
-          authenticated={authenticated}
-          />
+          <Nav authenticated={authenticated} />
           <Switch>
             <Route exact path="/">
               <Hero />
               <Index />
             </Route>
             <Route exact path="/manage">
-            {manage}
+              {manage}
             </Route>
             <Route exact path="/blog">
               <Blog />
@@ -49,8 +52,8 @@ export default function App() {
           </Switch>
         </div>
         <Footer
-        authenticated={authenticated}
-        setAuthenticated={setAuthenticated}
+          authenticated={authenticated}
+          setAuthenticated={setAuthenticated}
         />
       </Router>
     </SWRConfig>

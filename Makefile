@@ -16,7 +16,7 @@ livereload:
 
 .PHONY: frontend-build
 frontend-build:
-	cd ./frontend && yarn run build
+	cd ./frontend && yarn run format && yarn run build
 
 .PHONY: frontend-dev
 frontend-dev:

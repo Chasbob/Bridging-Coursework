@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import fetcher from "../utils/fetcher"
 import { useCookies } from "react-cookie"
 
-export default function Login({authenticated, setAuthenticated}) {
+export default function Login({ authenticated, setAuthenticated }) {
   const [cookies, setCookie, removeCookie] = useCookies(["access"])
   const [modalActive, setModalActive] = useState(false)
   const [notification, setNotification] = useState(false)
@@ -24,7 +24,11 @@ export default function Login({authenticated, setAuthenticated}) {
     setNotification(null)
     await fetcher("api-auth/login/", "POST", form, false)
       .then(json => {
-        setCookie("access", json, { sameSite: "strict", maxAge: "2592000", secure: true })
+        setCookie("access", json, {
+          sameSite: "strict",
+          maxAge: "2592000",
+          secure: true,
+        })
         setAuthenticated(true)
         setModalActive(false)
       })
