@@ -10,7 +10,7 @@ export default function PostPreview({ post }) {
   return (
     <div className="my-6" key={post.id}>
       <div className="content">
-        <Link to={`/${post.id}`}>
+        <Link to={`/${post.title.replace(" ", "-")}`}>
           <p className="title is-3 has-text-link is-capitalized">
             {post.title}
           </p>

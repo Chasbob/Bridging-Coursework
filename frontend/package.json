@@ -27,7 +27,7 @@
     "build": "NODE_ENV=production webpack --mode production",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write \"**/*.{js,jsx,json}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,json}\""
   },
   "eslintConfig": {
     "extends": "react-app"

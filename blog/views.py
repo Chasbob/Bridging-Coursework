@@ -1,4 +1,5 @@
 import logging
+import re
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -28,11 +29,20 @@ def post_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def post_detail(request, pk):
     try:
-        student = Post.objects.get(pk=pk)
+        if isinstance(pk, int):
+            data = Post.objects.get(pk=pk)
+            logger.warning(f'student by pk={pk} student={data}')
+        else:
+            data = Post.objects.get(title=re.sub(r'-', ' ', pk))
+            logger.warning(f'student by title={pk} student={data}')
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
-        data = Post.objects.get(pk=pk)
+        data = None
+        if isinstance(pk, int):
+            data = Post.objects.get(pk=pk)
+        else:
+            data = Post.objects.get(title=re.sub(r'[-/]', ' ', pk))
         serializer = PostSerializer(data, context={'request': request}, many=False)
         return Response(serializer.data)
 
