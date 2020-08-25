@@ -71,6 +71,17 @@ with_social = ["django-allauth (>=0.25.0)"]
 
 [[package]]
 category = "main"
+description = "Serve production static files with Django."
+name = "dj-static"
+optional = false
+python-versions = "*"
+version = "0.0.6"
+
+[package.dependencies]
+static3 = "*"
+
+[[package]]
+category = "main"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 name = "django"
 optional = false
@@ -110,6 +121,17 @@ beautifulsoup4 = ">=4.3.2"
 django = ">=1.8"
 six = "*"
 tornado = "*"
+
+[[package]]
+category = "dev"
+description = "An SSL-enabled development server for Django"
+name = "django-sslserver"
+optional = false
+python-versions = "*"
+version = "0.22"
+
+[package.dependencies]
+Django = ">=1.8"
 
 [[package]]
 category = "main"
@@ -260,6 +282,18 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.3.1"
 
 [[package]]
+category = "main"
+description = "A really simple WSGI way to serve static (or mixed) content."
+name = "static3"
+optional = false
+python-versions = "*"
+version = "0.7.0"
+
+[package.extras]
+GenshiMagic = ["genshi"]
+KidMagic = ["kid"]
+
+[[package]]
 category = "dev"
 description = "Python Library for Tom's Obvious, Minimal Language"
 name = "toml"
@@ -327,7 +361,7 @@ python-versions = "*"
 version = "1.12.1"
 
 [metadata]
-content-hash = "113d3162c7669672a8bfee7c131137927064e43edec323c2a87ade98cb6f8ba7"
+content-hash = "6786e06c4365beb6c34fabd0564b88ea75fce6f682e93885c0083ee3cfbb140a"
 lock-version = "1.0"
 python-versions = "3.8"
 
@@ -356,6 +390,9 @@ colorama = [
 dj-rest-auth = [
     {file = "dj-rest-auth-1.1.1.tar.gz", hash = "sha256:96bb0c13d36747b02104e06cc8cd7214398c325a633b2cb102f00bf946208dd1"},
 ]
+dj-static = [
+    {file = "dj-static-0.0.6.tar.gz", hash = "sha256:032ec1c532617922e6e3e956d504a6fb1acce4fc1c7c94612d0fda21828ce8ef"},
+]
 django = [
     {file = "Django-3.1-py3-none-any.whl", hash = "sha256:1a63f5bb6ff4d7c42f62a519edc2adbb37f9b78068a5a862beff858b68e3dc8b"},
     {file = "Django-3.1.tar.gz", hash = "sha256:2d390268a13c655c97e0e2ede9d117007996db692c1bb93eabebd4fb7ea7012b"},
@@ -366,6 +403,9 @@ django-cors-headers = [
 ]
 django-livereload-server = [
     {file = "django-livereload-server-0.3.2.tar.gz", hash = "sha256:6c8da1cb356d9a7fd044d0a50342574aad168522d5d8d25bbdc4ddd9fd196eab"},
+]
+django-sslserver = [
+    {file = "django_sslserver-0.22-py3-none-any.whl", hash = "sha256:c598a363d2ccdc2421c08ddb3d8b0973f80e8e47a3a5b74e4a2896f21c2947c5"},
 ]
 djangorestframework = [
     {file = "djangorestframework-3.11.1-py3-none-any.whl", hash = "sha256:8b1ac62c581dbc5799b03e535854b92fc4053ecfe74bad3f9c05782063d4196b"},
@@ -460,6 +500,9 @@ soupsieve = [
 sqlparse = [
     {file = "sqlparse-0.3.1-py2.py3-none-any.whl", hash = "sha256:022fb9c87b524d1f7862b3037e541f68597a730a8843245c349fc93e1643dc4e"},
     {file = "sqlparse-0.3.1.tar.gz", hash = "sha256:e162203737712307dfe78860cc56c8da8a852ab2ee33750e33aeadf38d12c548"},
+]
+static3 = [
+    {file = "static3-0.7.0.tar.gz", hash = "sha256:674641c64bc75507af2eb20bef7e7e3593dca993dec6674be108fa15b42f47c8"},
 ]
 toml = [
     {file = "toml-0.10.1-py2.py3-none-any.whl", hash = "sha256:bda89d5935c2eac546d648028b9901107a595863cb36bae0c73ac804a9b4ce88"},

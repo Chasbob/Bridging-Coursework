@@ -28,8 +28,9 @@ DEBUG = os.getenv('DEBUG') is not None
 
 ALLOWED_HOSTS = [
     'chasbob.pythonanywhere.com',
-    '*' if DEBUG else '',
 ]
+if DEBUG:
+    ALLOWED_HOSTS.append("*")
 
 
 # Application definition
@@ -40,18 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'livereload' if DEBUG else '',
     'django.contrib.staticfiles',
+    'sslserver',
 
     'rest_framework',
     'rest_framework.authtoken',
-    # 'rest_auth',
     'dj_rest_auth',
 
     'corsheaders',
     'blog.apps.BlogConfig',
     'frontend',
 ]
+if DEBUG:
+    INSTALLED_APPS.insert(5, 'livereload')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,8 +65,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'livereload.middleware.LiveReloadScript' if DEBUG else ''
 ]
+if DEBUG:
+    MIDDLEWARE.append('livereload.middleware.LiveReloadScript')
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -87,6 +90,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    'https://localhost/',
+    'https://localhost:3000/',
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
