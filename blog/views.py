@@ -9,6 +9,15 @@ from .serializers import *
 
 logger = logging.getLogger(__name__)
 
+def is_integer(n):
+    try:
+        float(n)
+    except ValueError:
+        return False
+    else:
+        return float(n).is_integer()
+
+
 @api_view(['GET', 'POST'])
 def post_list(request):
     if request.method == 'GET':
@@ -29,17 +38,17 @@ def post_list(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def post_detail(request, pk):
     try:
-        if isinstance(pk, int):
+        if is_integer(pk):
             data = Post.objects.get(pk=pk)
-            logger.warning(f'student by pk={pk} student={data}')
+            logger.warning(f'data by pk={pk} data={data}')
         else:
             data = Post.objects.get(title=re.sub(r'-', ' ', pk))
-            logger.warning(f'student by title={pk} student={data}')
+            logger.warning(f'data by title={pk} data={data}')
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
         data = None
-        if isinstance(pk, int):
+        if is_integer(pk):
             data = Post.objects.get(pk=pk)
         else:
             data = Post.objects.get(title=re.sub(r'[-/]', ' ', pk))
@@ -48,13 +57,13 @@ def post_detail(request, pk):
 
 
     if request.method == 'PUT':
-        serializer = PostSerializer(student, data=request.data, context={'request': request})
+        serializer = PostSerializer(data, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(data={}, status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        student.delete()
+        data.delete()
         return Response(data={}, status=status.HTTP_202_ACCEPTED)
 

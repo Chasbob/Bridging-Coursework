@@ -14,7 +14,7 @@ export default function CRUD({ post }) {
   const [modalActive, setModalActive] = useState(false)
   let controls = (
     <div className="card-footer">
-      <Link className="card-footer-item" to={`/${post.id}`}>
+      <Link className="card-footer-item" to={`/blog/${post.id}`}>
         View
       </Link>
       <a className="card-footer-item" onClick={() => setModalActive(true)}>

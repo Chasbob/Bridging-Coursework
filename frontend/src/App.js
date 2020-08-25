@@ -46,7 +46,7 @@ export default function App() {
             <Route exact path="/blog">
               <Blog />
             </Route>
-            <Route path="/:postId">
+            <Route exact path="/blog/:postId">
               <Post />
             </Route>
           </Switch>

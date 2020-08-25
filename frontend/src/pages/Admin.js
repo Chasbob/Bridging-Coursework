@@ -5,6 +5,7 @@ import CRUD from "../components/CRUD"
 import PostModal from "../components/PostModal"
 import { FaPlusCircle } from "react-icons/fa"
 import { useCookies } from "react-cookie"
+import moment from "moment"
 
 export default function Admin() {
   const [cookies] = useCookies(["access"])
@@ -15,6 +16,10 @@ export default function Admin() {
     revalidateOnMount: true,
   })
   const cruds = posts.map(item => {
+    item.created_date = moment(new Date(item.created_date)).format("YYYY-MM-DD")
+    item.published_date = moment(new Date(item.published_date)).format(
+      "YYYY-MM-DD"
+    )
     return <CRUD key={item.id} post={item} />
   })
 

@@ -6,8 +6,8 @@ export default function PostModal({ onSubmit, onClose, data }) {
     data || {
       title: "",
       text: "",
-      created_date: moment(new Date()).format("YYYY-MM-DDThh:mm"),
-      published_date: moment(new Date()).format("YYYY-MM-DDThh:mm"),
+      created_date: new Date(),
+      published_date: new Date(),
       author: 0,
     }
   )
@@ -15,6 +15,10 @@ export default function PostModal({ onSubmit, onClose, data }) {
   const handleSubmit = event => {
     event.preventDefault()
     if (onSubmit) {
+      form.published_date = moment(form.published_date).format(
+        "YYYY-MM-DD HH:mm"
+      )
+      form.created_date = moment(form.created_date).format("YYYY-MM-DD HH:mm")
       onSubmit(form)
     }
   }
@@ -66,7 +70,18 @@ export default function PostModal({ onSubmit, onClose, data }) {
               />
             </div>
           </div>
-
+          <div className="field">
+            <label className="label">Created date</label>
+            <div className="control">
+              <input
+                name="created_date"
+                type="date"
+                className="date input"
+                value={form.created_date}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
           <div className="field">
             <div className="control">
               <input
