@@ -44,7 +44,7 @@ export function DropdownItem({ children, disabled, onClick }) {
     if (onClick && !disabled) onClick()
   }
 
-  const url = null;
+  const url = null
   return (
     <a
       href={url}

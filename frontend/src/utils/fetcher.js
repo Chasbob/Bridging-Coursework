@@ -25,7 +25,7 @@ export async function getWithToken(endpoint, token) {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization:  `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
   })
 
