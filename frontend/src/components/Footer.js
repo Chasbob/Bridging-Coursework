@@ -3,7 +3,7 @@ import React from "react"
 import Breadcrumb from "./Breadcrumb"
 import Login from "./Login"
 
-export default function Footer({authenticated, setAuthenticated}) {
+export default function Footer({ authenticated, setAuthenticated }) {
   return (
     <footer className="footer">
       <div className="container">
@@ -13,8 +13,8 @@ export default function Footer({authenticated, setAuthenticated}) {
           </div>
           <div className="level-right">
             <Login
-            authenticated={authenticated}
-            setAuthenticated={setAuthenticated}
+              authenticated={authenticated}
+              setAuthenticated={setAuthenticated}
             />
           </div>
         </div>

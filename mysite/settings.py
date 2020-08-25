@@ -94,10 +94,10 @@ CORS_ALLOWED_ORIGINS =[
     'https://chasbob.pythonanywhere.com'
 ]
 if DEBUG:
-    CORS_ALLOWED_ORIGINS.append([
+    CORS_ALLOWED_ORIGINS = CORS_ALLOWED_ORIGINS + [
     'https://localhost',
     'https://localhost:3000',
-    ])
+    ]
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
