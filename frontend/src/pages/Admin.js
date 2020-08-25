@@ -7,7 +7,8 @@ import { FaPlusCircle } from "react-icons/fa"
 import { useCookies } from "react-cookie"
 
 export default function Admin() {
-  const [cookies] = useCookies(["access_token", "refresh_token"])
+  const [cookies] = useCookies(["access"])
+  const access = cookies.access
 
   const { data: posts } = useSWR("/api/blog/", get, {
     initialData: [],
@@ -28,10 +29,9 @@ export default function Admin() {
 
   const handleModalSubmit = async form => {
     if (form.author === 0) {
-      form.author = parseInt(cookies["user"]["pk"])
+      form.author = parseInt(access.user.pk)
     }
-    console.log(form)
-    await post("/api/blog/", form, cookies["access_token"])
+    await post("/api/blog/", form, access.access_token)
     mutate("/api/blog/")
     setModalActive(false)
   }

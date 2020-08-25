@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
 import "./App.scss"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
 import { SWRConfig } from "swr"
+import { useCookies } from "react-cookie"
 
 import Nav from "./components/Nav"
 import Hero from "./components/Hero"
@@ -13,18 +14,31 @@ import Blog from "./pages/Blog"
 
 export default function App() {
   const config = {}
+  const [cookies] = useCookies(["access"])
+  const [authenticated, setAuthenticated] = useState(
+    cookies.access !== undefined ? true : false
+  )
+  const manage = () => {
+    if(authenticated){
+      return <Admin/>
+    }else{
+      return <Redirect to="/"/>
+    }
+  }
   return (
     <SWRConfig value={config}>
       <Router>
         <div className="main">
-          <Nav />
+          <Nav
+          authenticated={authenticated}
+          />
           <Switch>
             <Route exact path="/">
               <Hero />
               <Index />
             </Route>
             <Route exact path="/manage">
-              <Admin />
+            {manage}
             </Route>
             <Route exact path="/blog">
               <Blog />
@@ -34,7 +48,10 @@ export default function App() {
             </Route>
           </Switch>
         </div>
-        <Footer />
+        <Footer
+        authenticated={authenticated}
+        setAuthenticated={setAuthenticated}
+        />
       </Router>
     </SWRConfig>
   )

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 
-export default function Nav() {
+export default function Nav({authenticated}) {
   const [active, setActive] = useState(false)
 
   const handleToggle = () => {
@@ -33,9 +33,11 @@ export default function Nav() {
             <Link className="navbar-item" to="/blog">
               <span className="subtitle has-text-white">Blog</span>
             </Link>
-            <Link className="navbar-item" to="/manage">
+            {authenticated && (
+              <Link className="navbar-item" to="/manage">
               <span className="subtitle has-text-white">Manage</span>
             </Link>
+            )}
           </div>
         </div>
       </div>
