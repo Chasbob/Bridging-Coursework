@@ -7,9 +7,13 @@ import useSWR from "swr"
 
 export default function Post() {
   let { postId } = useParams()
-  const { data: post } = useSWR(`/api/blog/${postId}`, get, {
-    revalidateOnMount: true,
-  })
+  const { data: post } = useSWR(
+    `/api/blog/${postId.replace("/ /g", "-")}`,
+    get,
+    {
+      revalidateOnMount: true,
+    }
+  )
   if (!post) return "loading..."
   return (
     <section className="section">
