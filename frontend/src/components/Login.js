@@ -14,7 +14,8 @@ export default function Login({authenticated, setAuthenticated}) {
     setModalActive(false)
   }
 
-  const handelLogout = () => {
+  const handelLogout = async () => {
+    await fetcher("api-auth/logout/", "POST", false, false)
     removeCookie("access")
     setAuthenticated(false)
   }
@@ -23,7 +24,7 @@ export default function Login({authenticated, setAuthenticated}) {
     setNotification(null)
     await fetcher("api-auth/login/", "POST", form, false)
       .then(json => {
-        setCookie("access", json, { sameSite: "strict", maxAge: "2592000" })
+        setCookie("access", json, { sameSite: "strict", maxAge: "2592000", secure: true })
         setAuthenticated(true)
         setModalActive(false)
       })

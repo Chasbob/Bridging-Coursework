@@ -90,10 +90,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = [
-    'https://localhost/',
-    'https://localhost:3000/',
+CORS_ALLOWED_ORIGINS =[
+    'https://chasbob.pythonanywhere.com'
 ]
+if DEBUG:
+    CORS_ALLOWED_ORIGINS.append([
+    'https://localhost',
+    'https://localhost:3000',
+    ])
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -159,3 +163,4 @@ REST_FRAMEWORK = {
 
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'token'
+JWT_AUTH_SECURE = True
