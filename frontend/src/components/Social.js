@@ -6,8 +6,8 @@ import { AiOutlineMail } from "react-icons/ai"
 
 export default function Social() {
   return (
-    <nav className="panel">
-      <p className="panel-heading">Links</p>
+    <nav className="panel mt-3">
+      <p className="panel-heading is-family-primary">Links</p>
       <a className="panel-block is-active" href="https://github.com/Chasbob">
         <span className="panel-icon">
           <DiGithub />
