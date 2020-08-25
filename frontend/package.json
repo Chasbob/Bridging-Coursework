@@ -25,6 +25,7 @@
     "start": "react-scripts start",
     "dev": "NODE_ENV=development webpack --mode development",
     "build": "NODE_ENV=production webpack --mode production",
+    "react-build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.{js,jsx,json}\""
