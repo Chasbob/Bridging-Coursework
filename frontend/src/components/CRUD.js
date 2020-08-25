@@ -12,13 +12,17 @@ export default function CRUD({ post }) {
   const [cookies] = useCookies(["access"])
   const access = cookies.access
   const [modalActive, setModalActive] = useState(false)
-  const url = null;
+  const url = null
   let controls = (
     <div className="card-footer">
       <Link className="card-footer-item" to={`/blog/${post.id}`}>
         View
       </Link>
-      <a className="card-footer-item" href={url} onClick={() => setModalActive(true)}>
+      <a
+        className="card-footer-item"
+        href={url}
+        onClick={() => setModalActive(true)}
+      >
         Edit
       </a>
     </div>

@@ -26,7 +26,7 @@ export default function Login({ authenticated, setAuthenticated }) {
   useSWR(authenticated ? ["api-auth/user/", token] : null, getWithToken, {
     initialData: {},
     revalidateOnMount: true,
-    onError: handelLogout
+    onError: handelLogout,
   })
 
   const handelModalSubmit = async form => {

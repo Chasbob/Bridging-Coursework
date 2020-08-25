@@ -19,28 +19,33 @@ export default function Breadcrumb() {
     </li>
   )
 
-  parts.push(path.split("/").filter(part => part !== "").map((part, index) => {
-      if (index !== path.split("/").filter(part => part !== "").length - 1) {
-        return (
-          <li key={part}>
-            <Link
-              to={path
-                .split("/")
-                .slice(0, index + 2)
-                .join("/")}
-            >
-              {part}
-            </Link>
-          </li>
-        )
-      } else {
-        return (
-          <li key={part}>
-            <span className="mx-2">{part}</span>
-          </li>
-        )
-      }
-  }))
+  parts.push(
+    path
+      .split("/")
+      .filter(part => part !== "")
+      .map((part, index) => {
+        if (index !== path.split("/").filter(part => part !== "").length - 1) {
+          return (
+            <li key={part}>
+              <Link
+                to={path
+                  .split("/")
+                  .slice(0, index + 2)
+                  .join("/")}
+              >
+                {part}
+              </Link>
+            </li>
+          )
+        } else {
+          return (
+            <li key={part}>
+              <span className="mx-2">{part}</span>
+            </li>
+          )
+        }
+      })
+  )
 
   if (parts.length > 1) {
     return (
