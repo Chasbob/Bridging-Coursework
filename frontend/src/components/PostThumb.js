@@ -11,11 +11,11 @@ export default function PostPreview({ post }) {
     <div className="my-6" key={post.id}>
       <div className="content">
         <Link to={`/blog/${post.title.replace(/ /g, "-")}`}>
-          <p className="title is-3 has-text-link is-capitalized">
+          <p className="is-family-sans-serif title is-4 has-text-link is-capitalized">
             {post.title}
           </p>
         </Link>
-        <p className="subtitle is-6">
+        <p className="is-font-primary is-6">
           {formatter.format(new Date(post.published_date))}
         </p>
       </div>
