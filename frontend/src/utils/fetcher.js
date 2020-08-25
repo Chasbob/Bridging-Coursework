@@ -5,11 +5,27 @@ function url(endpoint) {
 }
 
 export async function get(endpoint) {
-  // return fetcher(endpoint,"GET", false, false)
   let resp = await fetch(url(endpoint), {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+    },
+  })
+
+  if (resp.ok) {
+    let json = await resp.json()
+    return json
+  } else {
+    throw new APIException(resp)
+  }
+}
+
+export async function getWithToken(endpoint, token) {
+  let resp = await fetch(url(endpoint), {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization:  `Bearer ${token}`
     },
   })
 

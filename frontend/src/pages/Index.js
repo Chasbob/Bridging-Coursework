@@ -4,12 +4,12 @@ export default function Index() {
   return (
     <section className="section">
       <div className="container">
-        <div className="columns">
-          <div className="column">
-            <p>Some bits about me.</p>
-          </div>
-          <div className="column">
-            <Social />
+        <div className="card is-medium">
+          <div className="card-content">
+            <div className="content">
+              <p className="title is-4 is-family-code is-inline">$ whoami</p>
+              <Social />
+            </div>
           </div>
         </div>
       </div>

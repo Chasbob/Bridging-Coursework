@@ -44,8 +44,10 @@ export function DropdownItem({ children, disabled, onClick }) {
     if (onClick && !disabled) onClick()
   }
 
+  const url = null;
   return (
     <a
+      href={url}
       className={`dropdown-item ${disabled ? "has-text-grey-light" : ""}`}
       onClick={handleClick}
     >

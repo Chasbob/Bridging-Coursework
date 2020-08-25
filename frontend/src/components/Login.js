@@ -1,9 +1,12 @@
 import React, { useState } from "react"
-import fetcher from "../utils/fetcher"
+import useSWR from "swr"
+import fetcher, { getWithToken } from "../utils/fetcher"
 import { useCookies } from "react-cookie"
 
 export default function Login({ authenticated, setAuthenticated }) {
+  const url = null
   const [cookies, setCookie, removeCookie] = useCookies(["access"])
+  const token = cookies.access ? cookies.access.access_token : ""
   const [modalActive, setModalActive] = useState(false)
   const [notification, setNotification] = useState(false)
   const handleModalOpen = () => {
@@ -19,6 +22,12 @@ export default function Login({ authenticated, setAuthenticated }) {
     removeCookie("access")
     setAuthenticated(false)
   }
+
+  useSWR(authenticated ? ["api-auth/user/", token] : null, getWithToken, {
+    initialData: {},
+    revalidateOnMount: true,
+    onError: handelLogout
+  })
 
   const handelModalSubmit = async form => {
     setNotification(null)
@@ -38,7 +47,7 @@ export default function Login({ authenticated, setAuthenticated }) {
   if (authenticated) {
     return (
       <div>
-        <a className="is-link" onClick={handelLogout}>
+        <a href={url} className="is-link" onClick={handelLogout}>
           Logout
         </a>
       </div>
@@ -46,7 +55,7 @@ export default function Login({ authenticated, setAuthenticated }) {
   }
   return (
     <div>
-      <a className="is-link" onClick={handleModalOpen}>
+      <a href={url} className="is-link" onClick={handleModalOpen}>
         Login
       </a>
       {modalActive && (
