@@ -11,5 +11,6 @@ class WorkEvent(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=100)
-    repo =  models.URLField()
+    source =  models.URLField(default='https://github.com')
+    view =  models.URLField(default='https://github.com')
     description = models.TextField()
