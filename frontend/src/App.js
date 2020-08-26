@@ -7,7 +7,6 @@ import {
   Redirect,
 } from "react-router-dom"
 import { SWRConfig } from "swr"
-import { useCookies } from "react-cookie"
 
 import Nav from "./components/Nav"
 import Hero from "./components/Hero"
@@ -19,11 +18,10 @@ import Blog from "./pages/Blog"
 
 export default function App() {
   const config = {}
-  const [cookies] = useCookies(["access"])
-  const [authenticated, setAuthenticated] = useState(
-    cookies.access !== undefined ? true : false
+  const [authenticated] = useState(
+    localStorage.getItem("token") !== undefined ? true : false
   )
-  const manage = () => {
+  const admin = () => {
     if (authenticated) {
       return <Admin />
     } else {
@@ -41,7 +39,7 @@ export default function App() {
               <Index />
             </Route>
             <Route exact path="/manage">
-              {manage}
+              {admin}
             </Route>
             <Route exact path="/blog">
               <Blog />
@@ -51,10 +49,7 @@ export default function App() {
             </Route>
           </Switch>
         </div>
-        <Footer
-          authenticated={authenticated}
-          setAuthenticated={setAuthenticated}
-        />
+        <Footer />
       </Router>
     </SWRConfig>
   )
