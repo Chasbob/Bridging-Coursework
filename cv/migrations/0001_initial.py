@@ -12,22 +12,20 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Project',
+            name='ItemCategory',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=100)),
-                ('repo', models.URLField()),
-                ('description', models.TextField()),
+                ('name', models.CharField(max_length=50)),
             ],
         ),
         migrations.CreateModel(
-            name='WorkEvent',
+            name='CVItem',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=100)),
                 ('location', models.CharField(max_length=100)),
-                ('start_date', models.DateField()),
-                ('end_date', models.DateField()),
+                ('description', models.TextField()),
+                ('category', models.ForeignKey(on_delete=models.deletion.CASCADE, to='cv.itemcategory'))
             ],
         ),
     ]
