@@ -5,12 +5,15 @@
 $family-sans-serif: 'Work Sans', sans-serif;
 $family-primary: 'Roboto', sans-serif;
 
-@import '~bulmaswatch/journal/variables';
+@import '~bulmaswatch/flatly/variables';
 @import '~bulma/bulma';
-@import '~bulmaswatch/journal/overrides';
+@import '~bulmaswatch/flatly/overrides';
 @import "~@creativebulma/bulma-divider";
 
 
+.navbar {
+  border-radius: 0%;
+}
 #root {
   display: flex;
   min-height: 100vh;

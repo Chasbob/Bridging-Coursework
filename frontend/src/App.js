@@ -13,17 +13,26 @@ import Hero from "./components/Hero"
 import Footer from "./components/Footer"
 import Index from "./pages/Index"
 import Post from "./pages/Post"
-import Admin from "./pages/Admin"
+import ManageBlog from "./pages/admin/ManageBlog"
+import ManageCV from "./pages/admin/ManageCV"
 import Blog from "./pages/Blog"
+import CV from "./pages/CV"
 
 export default function App() {
   const config = {}
-  const [authenticated] = useState(
-    localStorage.getItem("token") !== undefined ? true : false
+  const [authenticated, setAuthenticated] = useState(
+    localStorage.getItem("token") !== null ? true : false
   )
-  const admin = () => {
+  const manageBlog = () => {
     if (authenticated) {
-      return <Admin />
+      return <ManageBlog />
+    } else {
+      return <Redirect to="/" />
+    }
+  }
+  const manageCV = () => {
+    if (authenticated) {
+      return <ManageCV />
     } else {
       return <Redirect to="/" />
     }
@@ -38,18 +47,27 @@ export default function App() {
               <Hero />
               <Index />
             </Route>
-            <Route exact path="/manage">
-              {admin}
+            <Route exact path="/admin/blog">
+              {manageBlog}
+            </Route>
+            <Route exact path="/admin/cv">
+              {manageCV}
             </Route>
             <Route exact path="/blog">
               <Blog />
+            </Route>
+            <Route exact path="/cv">
+              <CV />
             </Route>
             <Route exact path="/blog/:postId">
               <Post />
             </Route>
           </Switch>
         </div>
-        <Footer />
+        <Footer
+          authenticated={authenticated}
+          setAuthenticated={setAuthenticated}
+        />
       </Router>
     </SWRConfig>
   )
