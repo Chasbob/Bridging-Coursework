@@ -28,24 +28,24 @@ export default function Nav({ authenticated }) {
           <div className="navbar-start"></div>
           <div className="navbar-end">
             <Link className="navbar-item is-tab" to="/">
-              <span className="subtitle has-text-white">Home</span>
+              <span>Home</span>
             </Link>
             <Link className="navbar-item is-tab" to="/blog">
-              <span className="subtitle has-text-white">Blog</span>
+              <span>Blog</span>
             </Link>
             <Link className="navbar-item is-tab" to="/cv">
-              <span className="subtitle has-text-white">CV</span>
+              <span>CV</span>
             </Link>
             {authenticated && (
               <div className="navbar-item has-dropdown is-hoverable">
                 <div className="navbar-link">Admin</div>
                 <div className="navbar-dropdown">
                   <Link className="navbar-item" to="/admin/blog">
-                    <span className="subtitle has-text-primary">Blog</span>
+                    <span>Blog</span>
                   </Link>
                   <div className="navbar-divider" />
                   <Link className="navbar-item" to="/admin/cv">
-                    <span className="subtitle has-text-primary">CV</span>
+                    <span>CV</span>
                   </Link>
                 </div>
               </div>
