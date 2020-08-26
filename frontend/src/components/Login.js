@@ -1,12 +1,18 @@
 import React, { useState } from "react"
 import useSWR from "swr"
-import fetcher, { getWithToken } from "../utils/fetcher"
-import { useCookies } from "react-cookie"
+import fetcher, { post } from "../utils/fetcher"
 
-export default function Login({ authenticated, setAuthenticated }) {
+export default function Login() {
   const url = null
-  const [cookies, setCookie, removeCookie] = useCookies(["access"])
-  const token = cookies.access ? cookies.access.access_token : ""
+  const [authenticated, setAuthenticated] = useState(
+    localStorage.getItem("token") !== null ? true : false
+  )
+  const [token, setToken] = useState(
+    authenticated ? localStorage.getItem("token") : ""
+  )
+  const [refresh, setRefresh] = useState(
+    authenticated ? localStorage.getItem("refresh") : ""
+  )
   const [modalActive, setModalActive] = useState(false)
   const [notification, setNotification] = useState(false)
   const handleModalOpen = () => {
@@ -18,26 +24,39 @@ export default function Login({ authenticated, setAuthenticated }) {
   }
 
   const handelLogout = async () => {
-    await fetcher("api-auth/logout/", "POST", false, false)
-    removeCookie("access")
+    await fetcher("api/auth/logout/", "POST", false, false)
+    localStorage.clear()
     setAuthenticated(false)
   }
 
-  useSWR(authenticated ? ["api-auth/user/", token] : null, getWithToken, {
-    initialData: {},
-    revalidateOnMount: true,
-    onError: handelLogout,
-  })
+  const handelRefresh = async () => {
+    await post("api/auth/token/refresh/", { refresh: refresh }, false)
+      .then(json => {
+        localStorage.setItem("token", json.access)
+        setToken(json.access)
+      })
+      .catch(e => console.error("refresh", e))
+  }
+
+  useSWR(
+    authenticated ? ["api/auth/token/verify/", { token: token }, false] : null,
+    post,
+    {
+      revalidateOnMount: true,
+      refreshInterval: 3,
+      onError: handelRefresh,
+    }
+  )
 
   const handelModalSubmit = async form => {
     setNotification(null)
-    await fetcher("api-auth/login/", "POST", form, false)
+    await fetcher("api/auth/login/", "POST", form, false)
       .then(json => {
-        setCookie("access", json, {
-          sameSite: "strict",
-          maxAge: "2592000",
-          secure: true,
-        })
+        localStorage.setItem("token", json.access_token)
+        localStorage.setItem("refresh", json.refresh_token)
+        localStorage.setItem("user", JSON.stringify(json.user))
+        setToken(json.access_token)
+        setRefresh(json.refresh_token)
         setAuthenticated(true)
         setModalActive(false)
       })
