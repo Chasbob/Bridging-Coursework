@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import WorkEvent, Project
+from .models import CVItem, ItemCategory
 
-class WorkSerializer(serializers.ModelSerializer):
+class CVItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = WorkEvent
-        fields = ('title', 'location', 'start_date', 'end_date')
+        model = CVItem
+        fields = ('id', 'title', 'location', 'description', 'category')
 
-class ProjectSerializer(serializers.ModelSerializer):
+class ItemCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Project
-        fields = ('title', 'source', 'description', 'view')
+        model = ItemCategory
+        fields = ('id', 'name')
