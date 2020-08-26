@@ -2,11 +2,8 @@ import React, { useState } from "react"
 import useSWR from "swr"
 import fetcher, { post } from "../utils/fetcher"
 
-export default function Login() {
+export default function Login({ authenticated, setAuthenticated }) {
   const url = null
-  const [authenticated, setAuthenticated] = useState(
-    localStorage.getItem("token") !== null ? true : false
-  )
   const [token, setToken] = useState(
     authenticated ? localStorage.getItem("token") : ""
   )
@@ -43,7 +40,6 @@ export default function Login() {
     post,
     {
       revalidateOnMount: true,
-      refreshInterval: 3,
       onError: handelRefresh,
     }
   )
