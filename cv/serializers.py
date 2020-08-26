@@ -6,7 +6,7 @@ class WorkSerializer(serializers.ModelSerializer):
         model = WorkEvent
         fields = ('title', 'location', 'start_date', 'end_date')
 
-class ProjectkSerializer(serializers.ModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ('title', 'source', 'description', 'view')

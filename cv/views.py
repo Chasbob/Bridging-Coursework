@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 from .models import WorkEvent, Project
-from .serializers import WorkSerializer, ProjectkSerializer
+from .serializers import WorkSerializer, ProjectSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -21,6 +21,6 @@ def project_list(request):
     if request.method == 'GET':
         data = Project.objects.all()
 
-        serializer = ProjectkSerializer(data, context={'request': request}, many=True)
+        serializer = ProjectSerializer(data, context={'request': request}, many=True)
 
         return Response(serializer.data)
