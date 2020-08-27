@@ -1,7 +1,9 @@
 import React, { useState } from "react"
 import moment from "moment"
+import Notification from "../Notification"
 
 export default function PostModal({ onSubmit, onClose, data }) {
+  const [notification, setNotification] = useState(false)
   const [form, setForm] = useState(
     data || {
       title: "",
@@ -14,12 +16,15 @@ export default function PostModal({ onSubmit, onClose, data }) {
 
   const handleSubmit = event => {
     event.preventDefault()
+    setNotification(false)
     if (onSubmit) {
       form.published_date = moment(form.published_date).format(
         "YYYY-MM-DD HH:mm"
       )
       form.created_date = moment(form.created_date).format("YYYY-MM-DD HH:mm")
       onSubmit(form)
+        .catch(e => e.response.text())
+        .then(t => setNotification(t))
     }
   }
 
@@ -31,6 +36,10 @@ export default function PostModal({ onSubmit, onClose, data }) {
     <div className="modal is-active">
       <div className="modal-background" onClick={onClose}></div>
       <div className="modal-content">
+        <Notification
+          notification={notification}
+          setNotification={setNotification}
+        />
         <form className="box" onSubmit={handleSubmit}>
           <h1 className="title">Create Post</h1>
           <div className="field">

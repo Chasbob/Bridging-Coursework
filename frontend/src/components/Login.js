@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import useSWR from "swr"
 import { post } from "../utils/fetcher"
+import Notification from "./Notification"
 
 export default function Login({ authenticated, setAuthenticated }) {
   const url = null
@@ -56,7 +57,8 @@ export default function Login({ authenticated, setAuthenticated }) {
         setAuthenticated(true)
         setModalActive(false)
       })
-      .catch(e => console.error(e))
+      .catch(e => e.response.text())
+      .then(t => setNotification(t))
   }
 
   if (authenticated) {
@@ -110,12 +112,10 @@ function LoginForm({ onSubmit, onClose, notification, setNotification }) {
     <div className="modal is-active">
       <div className="modal-background" onClick={onClose}></div>
       <div className="modal-content">
-        {notification && (
-          <div className="notification is-danger">
-            <button className="delete" onClick={handelNotificationClose} />
-            <p>{notification}</p>
-          </div>
-        )}
+        <Notification
+          notification={notification}
+          setNotification={setNotification}
+        />
         <form className="box" onSubmit={handleSubmit}>
           <h1 className="title">Login</h1>
           <div className="field">
