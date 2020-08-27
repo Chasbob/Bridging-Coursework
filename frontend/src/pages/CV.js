@@ -28,27 +28,27 @@ export default function CV() {
   return (
     <section className="section">
       <div className="container">
-        <div className="columns py-3">
-          <div className="column">
-            <article className="notification is-primary py-3">
+        <div className="tile is-ancestor is-vertical">
+          <div className="tile is-parent is-vertical">
+            <article className="tile is-child notification is-primary py-3">
               <p className="title is-family-primary">Education</p>
             </article>
             {education}
           </div>
-          <div className="column">
-            <article className="notification is-primary py-3">
+          <div className="tile is-parent is-vertical">
+            <article className="tile is-child notification is-primary py-3">
               <p className="title is-family-primary">Projects</p>
             </article>
             {projects}
           </div>
-          <div className="column">
-            <article className="notification is-primary py-3">
+          <div className="tile is-parent is-vertical">
+            <article className="tile is-child notification is-primary py-3">
               <p className="title is-family-primary">Work</p>
             </article>
             {work}
           </div>
-          <div className="column">
-            <article className="notification is-primary py-3">
+          <div className="tile is-parent is-vertical">
+            <article className="tile is-child notification is-primary py-3">
               <p className="title is-family-primary">Volunteering</p>
             </article>
             {volunteering}
