@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import useSWR from "swr"
 import { get } from "../../utils/fetcher"
+import * as FA from "react-icons/fa"
 
 export default function ItemModal({ onSubmit, onClose, data }) {
   const { data: types } = useSWR("api/cv/types/", get, {
@@ -20,8 +21,16 @@ export default function ItemModal({ onSubmit, onClose, data }) {
       description: "",
       location: "",
       category: 1,
+      icon: "FaBookmark",
     }
   )
+  const icons = Object.keys(FA).map(key => {
+    return (
+      <option key={key} value={key}>
+        {key}
+      </option>
+    )
+  })
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -89,6 +98,20 @@ export default function ItemModal({ onSubmit, onClose, data }) {
                 onChange={handleInputChange}
               >
                 {options}
+              </select>
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Icon</label>
+            <div className="control">
+              <select
+                name="icon"
+                className="input"
+                type="select"
+                value={form.icon}
+                onChange={handleInputChange}
+              >
+                {icons}
               </select>
             </div>
           </div>

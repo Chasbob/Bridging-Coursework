@@ -1,14 +1,18 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import CodeBlock from "../../components/CodeBlock"
+import * as FA from "react-icons/fa"
 
 export default function Item({ item }) {
   return (
     <div className="tile is-child">
       <div className="card">
-        <div className="card-header">
+        <header className="card-header">
+          <div className="card-header-icon">
+            <Icon tag={item.icon} />
+          </div>
           <p className="card-header-title">{item.title}</p>
-        </div>
+        </header>
         <div className="card-content">
           <ReactMarkdown
             className="text has-text-left is-family-primary"
@@ -20,4 +24,9 @@ export default function Item({ item }) {
       </div>
     </div>
   )
+}
+
+function Icon({ tag }) {
+  const Output = FA[tag]
+  return <Output />
 }
