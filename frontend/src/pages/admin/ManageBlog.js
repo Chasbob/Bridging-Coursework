@@ -8,10 +8,12 @@ import moment from "moment"
 import { remove, put } from "../../utils/fetcher"
 
 export default function ManageBlog() {
-  const [authenticated] = useState(
+  const [authenticated] = useSWR("authenticated", () =>
     localStorage.getItem("token") !== null ? true : false
   )
-  const [token] = useState(authenticated ? localStorage.getItem("token") : "")
+  const { data: token } = useSWR(authenticated ? "token" : null, () =>
+    localStorage.getItem("token")
+  )
   const [userId] = useState(
     authenticated ? JSON.parse(localStorage.getItem("user")).pk : ""
   )

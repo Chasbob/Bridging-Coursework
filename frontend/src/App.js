@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import "./App.scss"
 import {
   BrowserRouter as Router,
@@ -6,7 +6,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom"
-import { SWRConfig } from "swr"
+import useSWR, { SWRConfig } from "swr"
 
 import Nav from "./components/Nav"
 import Hero from "./components/Hero"
@@ -20,8 +20,13 @@ import CV from "./pages/CV"
 
 export default function App() {
   const config = {}
-  const [authenticated, setAuthenticated] = useState(
-    localStorage.getItem("token") !== null ? true : false
+  const { data: authenticated } = useSWR(
+    "authenticated",
+    () => (localStorage.getItem("token") !== null ? true : false),
+    {
+      initialData: "",
+      revalidateOnMount: true,
+    }
   )
   const manageBlog = () => {
     if (authenticated) {
@@ -64,10 +69,7 @@ export default function App() {
             </Route>
           </Switch>
         </div>
-        <Footer
-          authenticated={authenticated}
-          setAuthenticated={setAuthenticated}
-        />
+        <Footer />
       </Router>
     </SWRConfig>
   )

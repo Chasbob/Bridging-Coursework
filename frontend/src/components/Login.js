@@ -1,15 +1,33 @@
 import React, { useState } from "react"
-import useSWR from "swr"
+import useSWR, { mutate } from "swr"
 import { post } from "../utils/fetcher"
 import Notification from "./Notification"
 
-export default function Login({ authenticated, setAuthenticated }) {
+export default function Login() {
   const url = null
-  const [token, setToken] = useState(
-    authenticated ? localStorage.getItem("token") : ""
+  const { data: authenticated } = useSWR(
+    "authenticated",
+    () => (localStorage.getItem("token") !== null ? true : false),
+    {
+      initialData: "",
+      revalidateOnMount: true,
+    }
   )
-  const [refresh, setRefresh] = useState(
-    authenticated ? localStorage.getItem("refresh") : ""
+  const { data: token } = useSWR(
+    authenticated ? "token" : null,
+    () => localStorage.getItem("token"),
+    {
+      initialData: "",
+      revalidateOnMount: true,
+    }
+  )
+  const { data: refresh } = useSWR(
+    authenticated ? "refresh" : null,
+    () => localStorage.getItem("refresh"),
+    {
+      initialData: "",
+      revalidateOnMount: true,
+    }
   )
   const [modalActive, setModalActive] = useState(false)
   const [notification, setNotification] = useState(false)
@@ -24,20 +42,22 @@ export default function Login({ authenticated, setAuthenticated }) {
   const handelLogout = async () => {
     await post("api/auth/logout/", false, false)
     localStorage.clear()
-    setAuthenticated(false)
+    mutate("authenticated")
+    mutate("token")
+    mutate("refresh")
   }
 
   const handelRefresh = async () => {
     await post("api/auth/token/refresh/", { refresh: refresh }, false)
       .then(json => {
         localStorage.setItem("token", json.access)
-        setToken(json.access)
+        mutate("authenticated")
       })
       .catch(e => console.error("refresh", e))
   }
 
   useSWR(
-    authenticated ? ["api/auth/token/verify/", { token: token }, false] : null,
+    token !== "" ? ["api/auth/token/verify/", { token: token }, false] : null,
     post,
     {
       revalidateOnMount: true,
@@ -52,9 +72,9 @@ export default function Login({ authenticated, setAuthenticated }) {
         localStorage.setItem("token", json.access_token)
         localStorage.setItem("refresh", json.refresh_token)
         localStorage.setItem("user", JSON.stringify(json.user))
-        setToken(json.access_token)
-        setRefresh(json.refresh_token)
-        setAuthenticated(true)
+        mutate("token")
+        mutate("refresh")
+        mutate("authenticated")
         setModalActive(false)
       })
       .catch(e => e.response.text())
@@ -64,7 +84,7 @@ export default function Login({ authenticated, setAuthenticated }) {
   if (authenticated) {
     return (
       <div>
-        <a href={url} className="is-link" onClick={handelLogout}>
+        <a href={url} className="is-link is-family-code" onClick={handelLogout}>
           Logout
         </a>
       </div>
@@ -72,7 +92,11 @@ export default function Login({ authenticated, setAuthenticated }) {
   }
   return (
     <div>
-      <a href={url} className="is-link" onClick={handleModalOpen}>
+      <a
+        href={url}
+        className="is-link is-family-code"
+        onClick={handleModalOpen}
+      >
         Login
       </a>
       {modalActive && (
