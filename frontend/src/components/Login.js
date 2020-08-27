@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import useSWR from "swr"
-import fetcher, { post } from "../utils/fetcher"
+import { post } from "../utils/fetcher"
 
 export default function Login({ authenticated, setAuthenticated }) {
   const url = null
@@ -21,7 +21,7 @@ export default function Login({ authenticated, setAuthenticated }) {
   }
 
   const handelLogout = async () => {
-    await fetcher("api/auth/logout/", "POST", false, false)
+    await post("api/auth/logout/", false, false)
     localStorage.clear()
     setAuthenticated(false)
   }
@@ -46,7 +46,7 @@ export default function Login({ authenticated, setAuthenticated }) {
 
   const handelModalSubmit = async form => {
     setNotification(null)
-    await fetcher("api/auth/login/", "POST", form, false)
+    await post("api/auth/login/", form, false)
       .then(json => {
         localStorage.setItem("token", json.access_token)
         localStorage.setItem("refresh", json.refresh_token)
