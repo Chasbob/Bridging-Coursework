@@ -27,25 +27,25 @@ export default function Nav({ authenticated }) {
         <div className={`navbar-menu ${active ? "is-active" : ""}`}>
           <div className="navbar-start"></div>
           <div className="navbar-end">
-            <Link className="navbar-item is-tab" to="/">
+            <Link className="navbar-item is-tab is-family-code" to="/">
               <span>Home</span>
             </Link>
-            <Link className="navbar-item is-tab" to="/blog">
+            <Link className="navbar-item is-tab is-family-code" to="/blog">
               <span>Blog</span>
             </Link>
-            <Link className="navbar-item is-tab" to="/cv">
+            <Link className="navbar-item is-tab is-family-code" to="/cv">
               <span>CV</span>
             </Link>
             {authenticated && (
               <div className="navbar-item has-dropdown is-hoverable">
-                <div className="navbar-link">Admin</div>
+                <div className="navbar-link is-family-code">Admin</div>
                 <div className="navbar-dropdown">
                   <Link className="navbar-item" to="/admin/blog">
-                    <span>Blog</span>
+                    <span className="is-family-code">Blog</span>
                   </Link>
                   <div className="navbar-divider" />
                   <Link className="navbar-item" to="/admin/cv">
-                    <span>CV</span>
+                    <span className="is-family-code">CV</span>
                   </Link>
                 </div>
               </div>

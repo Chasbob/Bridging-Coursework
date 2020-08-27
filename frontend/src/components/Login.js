@@ -124,10 +124,6 @@ function LoginForm({ onSubmit, onClose, notification, setNotification }) {
     }
   }
 
-  const handelNotificationClose = () => {
-    setNotification(false)
-  }
-
   const handleInputChange = event => {
     setForm({ ...form, [event.target.name]: event.target.value })
   }

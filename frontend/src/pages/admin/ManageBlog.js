@@ -8,7 +8,7 @@ import moment from "moment"
 import { remove, put } from "../../utils/fetcher"
 
 export default function ManageBlog() {
-  const [authenticated] = useSWR("authenticated", () =>
+  const { data: authenticated } = useSWR("authenticated", () =>
     localStorage.getItem("token") !== null ? true : false
   )
   const { data: token } = useSWR(authenticated ? "token" : null, () =>
