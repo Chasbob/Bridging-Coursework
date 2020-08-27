@@ -15,9 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from rest_framework.schemas import get_schema_view
+from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
+    path('openapi.json', get_schema_view(
+        title="Your Project",
+        description="API for all things …"
+    ), name='openapi-schema'),
+    path('api/docs/', TemplateView.as_view(
+        template_name='swagger-ui.html',
+        extra_context={'schema_url':'openapi-schema'}
+    ), name='swagger-ui'),
     re_path(r'^api/auth/', include('dj_rest_auth.urls')),
     path('', include('blog.urls')),
     path('', include('cv.urls')),
