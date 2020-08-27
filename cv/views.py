@@ -42,3 +42,12 @@ def type_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_type(request, pk):
+    try:
+        data = CVItem.objects.all().filter(category=pk)
+        serializer = CVItemSerializer(data, context={'request': request}, many=True)
+        return Response(serializer.data)
+    except CVItem.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
