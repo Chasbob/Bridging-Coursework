@@ -11,7 +11,11 @@ export default function Item({ item }) {
           <div className="card-header-icon">
             <Icon tag={item.icon} />
           </div>
-          <p className="card-header-title">{item.title}</p>
+          <p className="card-header-title is-family-sans-serif">{item.title}</p>
+          <div className="card-header-icon is-hidden-mobile">
+            <p className="px-3 is-family-code">{item.location} </p>
+            <FA.FaMapMarkerAlt />
+          </div>
         </header>
         <div className="card-content">
           <ReactMarkdown
