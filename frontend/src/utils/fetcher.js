@@ -5,104 +5,21 @@ function url(endpoint) {
 }
 
 export async function get(endpoint) {
-  let resp = await fetch(url(endpoint), {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  })
-
-  if (resp.ok) {
-    let json = await resp.json()
-    return json
-  } else {
-    throw new APIException(resp)
-  }
-}
-
-export async function getWithToken(endpoint, token) {
-  let resp = await fetch(url(endpoint), {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-
-  if (resp.ok) {
-    let json = await resp.json()
-    return json
-  } else {
-    throw new APIException(resp)
-  }
+  return base(endpoint, false, false, "GET")
 }
 
 export async function post(endpoint, content, token) {
-  let headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  }
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-  let resp = await fetch(url(endpoint), {
-    method: "POST",
-    body: JSON.stringify(content),
-    redirect: "follow",
-    headers: headers,
-  })
-  if (resp.ok) {
-    let json = await resp.json()
-    return json
-  } else {
-    throw new APIException(resp)
-  }
+  return base(endpoint, content, token, "POST")
 }
 
 export async function put(endpoint, content, token) {
-  let headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  }
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-  let resp = await fetch(url(endpoint), {
-    method: "PUT",
-    body: JSON.stringify(content),
-    redirect: "follow",
-    headers: headers,
-  })
-  if (resp.ok) {
-    let json = await resp.json()
-    return json
-  } else {
-    throw new APIException(resp)
-  }
+  return base(endpoint, content, token, "PUT")
 }
-
 export async function remove(endpoint, token) {
-  let headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  }
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-  let resp = await fetch(url(endpoint), {
-    method: "DELETE",
-    redirect: "follow",
-    headers: headers,
-  })
-  if (resp.ok) {
-    let json = await resp.json()
-    return json
-  } else {
-    throw new APIException(resp)
-  }
+  return base(endpoint, false, token, "DELETE")
 }
 
-export default async function fetcher(endpoint, method, content, token) {
+async function base(endpoint, content, token, method) {
   let headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -110,14 +27,23 @@ export default async function fetcher(endpoint, method, content, token) {
   if (token) {
     headers.Authorization = `Bearer ${token}`
   }
-  let resp = await fetch(url(endpoint), {
-    method: method,
-    body: content !== false ? JSON.stringify(content) : "",
-    redirect: "follow",
-    headers: headers,
-  })
+  let resp
+  if (!content) {
+    resp = await fetch(url(endpoint), {
+      method: method,
+      redirect: "follow",
+      headers: headers,
+    })
+  } else {
+    resp = await fetch(url(endpoint), {
+      method: method,
+      body: JSON.stringify(content),
+      redirect: "follow",
+      headers: headers,
+    })
+  }
   if (resp.ok) {
-    let json = await resp.json()
+    let json = await resp.json().catch({})
     return json
   } else {
     throw new APIException(resp)
