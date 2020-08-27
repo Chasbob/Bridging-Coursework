@@ -27,25 +27,31 @@ export default function ManageCV() {
   }
   const toItems = async endpoint => {
     let json = await get(endpoint)
-    return json.map(item => <CVCRUD key={item.id} data={item} token={token} />)
+    let output = {}
+    types.forEach(element => {
+      output[element.name] = json
+        .filter(item => item.category === element.id)
+        .map(item => <CVCRUD key={item.id} data={item} token={token} />)
+    })
+    return output
   }
-  const { data: education } = useSWR("/api/cv/types/1/", toItems, {
-    initialData: [],
-    revalidateOnMount: true,
-  })
-  const { data: projects } = useSWR("/api/cv/types/2/", toItems, {
-    initialData: [],
-    revalidateOnMount: true,
-  })
-  const { data: work } = useSWR("/api/cv/types/3/", toItems, {
-    initialData: [],
-    revalidateOnMount: true,
-  })
-  const { data: volunteering } = useSWR("/api/cv/types/4/", toItems, {
+  const { data: types } = useSWR("/api/cv/types/", get)
+  const { data: items } = useSWR(types ? "/api/cv/" : null, toItems, {
     initialData: [],
     revalidateOnMount: true,
   })
   const [modalActive, setModalActive] = useState(false)
+  const columns = Object.keys(items).map(col => {
+    return (
+      <div key={col} className="column">
+        <article className="notification is-primary py-3">
+          <p className="title is-family-primary">{col}</p>
+        </article>
+        {items[col]}
+      </div>
+    )
+  })
+
   return (
     <div>
       {modalActive && (
@@ -62,32 +68,7 @@ export default function ManageCV() {
             </span>
             <span>New</span>
           </button>
-          <div className="columns py-3">
-            <div className="column">
-              <article className="notification is-primary py-3">
-                <p className="title is-family-primary">Education</p>
-              </article>
-              {education}
-            </div>
-            <div className="column">
-              <article className="notification is-primary py-3">
-                <p className="title is-family-primary">Projects</p>
-              </article>
-              {projects}
-            </div>
-            <div className="column">
-              <article className="notification is-primary py-3">
-                <p className="title is-family-primary">Work</p>
-              </article>
-              {work}
-            </div>
-            <div className="column">
-              <article className="notification is-primary py-3">
-                <p className="title is-family-primary">Volunteering</p>
-              </article>
-              {volunteering}
-            </div>
-          </div>
+          <div className="columns py-3">{columns}</div>
         </div>
       </section>
     </div>
@@ -106,7 +87,9 @@ function CVCRUD({ data, token }) {
   }
 
   const handleModalSubmit = async form => {
-    await put(`/api/cv/${data.id}/`, form, token)
+    await put(`/api/cv/${data.id}/`, form, token).catch(e =>
+      console.log("submit", `/api/cv/${data.id}/`, form, token, e)
+    )
     mutate("/api/cv/")
     setModalActive(false)
   }
