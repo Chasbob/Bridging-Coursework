@@ -14,7 +14,7 @@ export default function Breadcrumb() {
         <span className="icon">
           <FaHome />
         </span>
-        <span>Home</span>
+        <span className="is-family-code">Home</span>
       </Link>
     </li>
   )
@@ -33,14 +33,14 @@ export default function Breadcrumb() {
                   .slice(0, index + 2)
                   .join("/")}
               >
-                {part}
+                <span className="is-family-code">{part}</span>
               </Link>
             </li>
           )
         } else {
           return (
             <li key={part}>
-              <span className="mx-2">{part}</span>
+              <span className="mx-2 is-family-code">{part}</span>
             </li>
           )
         }
