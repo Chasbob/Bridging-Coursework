@@ -10,9 +10,10 @@ export default function CRUD({
   children,
   modalActive,
   setModalActive,
+  controls,
 }) {
   const url = null
-  let controls = (
+  controls = controls || (
     <div className="card-footer">
       <Link className="card-footer-item" to={`/${basePath}/${data.id}`}>
         View
