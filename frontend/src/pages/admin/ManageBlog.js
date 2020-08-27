@@ -62,9 +62,7 @@ export default function ManageBlog() {
             <span>New</span>
           </button>
           <br />
-          <div key="things" className="grid">
-            {cruds}
-          </div>
+          <div className="grid">{cruds}</div>
         </div>
       </section>
     </div>

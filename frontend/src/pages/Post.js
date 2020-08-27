@@ -8,13 +8,25 @@ import useSWR from "swr"
 export default function Post() {
   let { postId } = useParams()
   const { data: post } = useSWR(
-    `/api/blog/${postId.replace("/ /g", "-")}`,
+    `/api/blog/${postId.replace("/ /g", "-")}/`,
     get,
     {
       revalidateOnMount: true,
     }
   )
-  if (!post) return "loading..."
+  if (!post) {
+    return (
+      <section className="section">
+        <div className="container">
+          <div className="level">
+            <div className="level-item">
+              <button className="button is-large is-loading " />
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
   return (
     <section className="section">
       <div className="container">
