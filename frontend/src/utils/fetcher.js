@@ -43,7 +43,9 @@ async function base(endpoint, content, token, method) {
     })
   }
   if (resp.ok) {
-    let json = await resp.json().catch({})
+    let json = await resp.json().catch(e => {
+      return {}
+    })
     return json
   } else {
     throw new APIException(resp)

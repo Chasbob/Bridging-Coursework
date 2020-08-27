@@ -51,3 +51,26 @@ def get_type(request, pk):
         return Response(serializer.data)
     except CVItem.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def get_item(request, pk):
+    try:
+        data = CVItem.objects.get(pk=pk)
+    except CVItem.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        try:
+            serializer = CVItemSerializer(data, context={'request': request}, many=False)
+            return Response(serializer.data)
+        except CVItem.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    elif request.method == 'PUT':
+        serializer = CVItemSerializer(data, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data={}, status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        data.delete()
+        return Response(data={}, status=status.HTTP_202_ACCEPTED)
