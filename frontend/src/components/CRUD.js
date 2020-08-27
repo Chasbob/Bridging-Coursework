@@ -1,25 +1,20 @@
-import React, { useState } from "react"
+import React from "react"
 import { Dropdown, DropdownItem } from "./Dropdown"
 import { Link } from "react-router-dom"
-import { remove } from "../utils/fetcher"
-import { mutate } from "swr"
-import PostModal from "./post/PostModal"
 import Truncate from "react-truncate"
-import { put } from "../utils/fetcher"
 
-export default function CRUD({ post }) {
-  const [modalActive, setModalActive] = useState(false)
-  const [authenticated] = useState(
-    localStorage.getItem("token") !== null ? true : false
-  )
-  const [token] = useState(authenticated ? localStorage.getItem("token") : "")
-  const [userId] = useState(
-    authenticated ? JSON.parse(localStorage.getItem("user")).pk : ""
-  )
+export default function CRUD({
+  data,
+  basePath,
+  handleDelete,
+  children,
+  modalActive,
+  setModalActive,
+}) {
   const url = null
   let controls = (
     <div className="card-footer">
-      <Link className="card-footer-item" to={`/blog/${post.id}`}>
+      <Link className="card-footer-item" to={`/${basePath}/${data.id}`}>
         View
       </Link>
       <a
@@ -32,34 +27,13 @@ export default function CRUD({ post }) {
     </div>
   )
 
-  const handleDelete = async () => {
-    await remove(`/api/blog/${post.id}/`, token)
-    mutate("/api/blog/")
-  }
-
-  const handleModalSubmit = async form => {
-    if (form.author === 0) {
-      form.author = parseInt(userId)
-    }
-    await put(`/api/blog/${post.id}`, form, token).catch(e => console.error(e))
-    mutate("/api/blog/")
-    setModalActive(false)
-  }
-
   return (
     <div className="grid-item">
-      {modalActive && (
-        <PostModal
-          data={post}
-          onClose={() => setModalActive(false)}
-          onSubmit={handleModalSubmit}
-        />
-      )}
-
+      {modalActive && children}
       <div className="card">
         <div className="card-header">
           <p className="card-header-title">
-            <Truncate lines={1}>{post.title}</Truncate>
+            <Truncate lines={1}>{data.title}</Truncate>
           </p>
           <div className="card-header-icon">
             <Dropdown right={true}>

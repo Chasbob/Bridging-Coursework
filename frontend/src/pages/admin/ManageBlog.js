@@ -5,6 +5,7 @@ import CRUD from "../../components/CRUD"
 import PostModal from "../../components/post/PostModal"
 import { FaPlusCircle } from "react-icons/fa"
 import moment from "moment"
+import { remove, put } from "../../utils/fetcher"
 
 export default function ManageBlog() {
   const [authenticated] = useState(
@@ -19,14 +20,6 @@ export default function ManageBlog() {
     initialData: [],
     revalidateOnMount: true,
   })
-  const cruds = posts.map(item => {
-    item.created_date = moment(new Date(item.created_date)).format("YYYY-MM-DD")
-    item.published_date = moment(new Date(item.published_date)).format(
-      "YYYY-MM-DD"
-    )
-    return <CRUD key={item.id} post={item} />
-  })
-
   const [modalActive, setModalActive] = useState(false)
   const handleModalOpen = () => {
     setModalActive(true)
@@ -44,6 +37,14 @@ export default function ManageBlog() {
     mutate("/api/blog/")
     setModalActive(false)
   }
+  const cruds = posts.map(item => {
+    item.created_date = moment(new Date(item.created_date)).format("YYYY-MM-DD")
+    item.published_date = moment(new Date(item.published_date)).format(
+      "YYYY-MM-DD"
+    )
+    return <BlogCRUD key={item.id} data={item} userId={userId} token={token} />
+  })
+
   return (
     <div>
       {modalActive && (
@@ -67,5 +68,45 @@ export default function ManageBlog() {
         </div>
       </section>
     </div>
+  )
+}
+
+function BlogCRUD({ data, userId, token }) {
+  const [modalActive, setModalActive] = useState(false)
+  const handleModalOpen = () => {
+    setModalActive(true)
+  }
+
+  const handleModalClose = () => {
+    setModalActive(false)
+  }
+
+  const handleModalSubmit = async form => {
+    if (form.author === 0) {
+      form.author = parseInt(userId)
+    }
+    await put(`/api/blog/${data.id}/`, form, token)
+    mutate("/api/blog/")
+    setModalActive(false)
+  }
+  const handleDelete = async () => {
+    await remove(`/api/blog/${data.id}/`, token)
+    mutate("/api/blog/")
+  }
+  return (
+    <CRUD
+      key={data.id}
+      data={data}
+      basePath="blog"
+      handleDelete={handleDelete}
+      modalActive={modalActive}
+      setModalActive={handleModalOpen}
+    >
+      <PostModal
+        data={data}
+        onSubmit={handleModalSubmit}
+        onClose={handleModalClose}
+      />
+    </CRUD>
   )
 }
