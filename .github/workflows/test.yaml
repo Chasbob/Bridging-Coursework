@@ -20,22 +20,9 @@ jobs:
           path: frontend/static/frontend/main.js
   api:
     runs-on: ubuntu-18.04
-    container:
-      image: node:14.4
-      options: --network-alias testHost
-    env:
-      NODE_ENV: test
-      SELENIUM_HUB_HOST: hub
-      TEST_HOST: testHost
-    services:
-      hub:
-        image: selenium/hub:3.141.59-gold
-      firefox:
-        image: selenium/node-firefox:3.141.59-gold
-        env:
-          HUB_HOST: hub
-          HUB_PORT: 4444
     steps:
+      - name: Start selenoid
+        uses: Xotabu4/selenoid-github-action@v1
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
@@ -51,4 +38,4 @@ jobs:
       - run: make test
         env:
           SECRET_KEY: test-key
-          WEBDRIVER_HOST: http://hub:4444/wd/hub
+          WEBDRIVER_HOST: http://localhost:4444/wd/hub
