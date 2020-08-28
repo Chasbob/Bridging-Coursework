@@ -26,10 +26,11 @@ export default function ManageCV() {
     mutate("/api/cv/")
     setModalActive(false)
   }
-  const toItems = json => {
+  const toItems = () => {
+    console.log("toItems")
     let output = {}
     types.forEach(element => {
-      output[element.name] = json
+      output[element.name] = items
         .filter(item => item.category === element.id)
         .map(item => <CVCRUD key={item.id} data={item} token={token} />)
     })
@@ -40,7 +41,10 @@ export default function ManageCV() {
     initialData: [],
     revalidateOnMount: true,
   })
-  const cards = types ? toItems(items) : {}
+  const { data: cards } = useSWR(types ? ["cvcruds", items] : null, toItems, {
+    initialData: [],
+    revalidateOnMount: true,
+  })
   const [modalActive, setModalActive] = useState(false)
   const columns = Object.keys(cards).map(col => {
     return (
@@ -92,9 +96,7 @@ function CVCRUD({ data, token }) {
   }
 
   const handleModalSubmit = async form => {
-    await put(`/api/cv/${data.id}/`, form, token).catch(e =>
-      console.log("submit", `/api/cv/${data.id}/`, form, token, e)
-    )
+    await put(`/api/cv/${data.id}/`, form, token).catch(e => {})
     mutate("/api/cv/")
     setModalActive(false)
   }

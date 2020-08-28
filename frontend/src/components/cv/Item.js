@@ -5,26 +5,24 @@ import * as FA from "react-icons/fa"
 
 export default function Item({ item }) {
   return (
-    <div className="tile is-child">
-      <div className="card">
-        <header className="card-header">
-          <div className="card-header-icon">
-            <Icon tag={item.icon} />
-          </div>
-          <p className="card-header-title is-family-sans-serif">{item.title}</p>
-          <div className="card-header-icon is-hidden-mobile">
-            <p className="px-3 is-family-code">{item.location} </p>
-            <FA.FaMapMarkerAlt />
-          </div>
-        </header>
-        <div className="card-content">
-          <ReactMarkdown
-            className="text has-text-left is-family-primary"
-            renderers={{ code: CodeBlock }}
-          >
-            {item.description}
-          </ReactMarkdown>
+    <div className="card my-4">
+      <header className="card-header">
+        <div className="card-header-icon">
+          <Icon tag={item.icon} />
         </div>
+        <p className="card-header-title is-family-sans-serif">{item.title}</p>
+        <div className="card-header-icon is-hidden-mobile">
+          <p className="px-3 is-family-code">{item.location} </p>
+          <FA.FaMapMarkerAlt />
+        </div>
+      </header>
+      <div className="card-content">
+        <ReactMarkdown
+          className="text has-text-left is-family-primary"
+          renderers={{ code: CodeBlock }}
+        >
+          {item.description}
+        </ReactMarkdown>
       </div>
     </div>
   )

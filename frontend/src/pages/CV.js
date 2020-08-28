@@ -6,21 +6,24 @@ import { get } from "../utils/fetcher"
 import Item from "../components/cv/Item"
 
 export default function CV() {
-  const toItems = json => {
+  const toItems = () => {
     let output = {}
     types.forEach(element => {
-      output[element.name] = json
+      output[element.name] = items
         .filter(item => item.category === element.id)
         .map(item => <Item key={item.id} item={item} />)
     })
     return output
   }
   const { data: types } = useSWR("/api/cv/types/", get)
-  const { data: items } = useSWR(types ? "/api/cv/" : null, toItems, {
+  const { data: items } = useSWR(types ? "/api/cv/" : null, get, {
     initialData: [],
     revalidateOnMount: true,
   })
-  const cards = types ? toItems(items) : {}
+  const { data: cards } = useSWR(types ? ["cvitems", items] : null, toItems, {
+    initialData: [],
+    revalidateOnMount: true,
+  })
   const columns = Object.keys(cards).map(col => {
     return (
       <div key={col} className="column">
