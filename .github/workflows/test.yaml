@@ -34,8 +34,4 @@ jobs:
         run: poetry --help
       - name: Install Dependencies
         run: poetry install
-      - uses: actions/download-artifact@master
-        with:
-          name: js-bundle
-          path: frontend/static/frontend/main.js
       - run: make test
