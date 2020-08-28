@@ -17,7 +17,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         options = Options()
-        # options.set_headless(True)
+        options.set_headless(True)
         if os.getenv('WEBDRIVER_HOST'):
             cls.selenium = webdriver.Remote(
                 command_executor=os.getenv('WEBDRIVER_HOST'),
