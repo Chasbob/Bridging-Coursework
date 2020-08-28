@@ -1,4 +1,4 @@
-name: Test
+name: Build
 on:
   push:
     branches:
@@ -12,12 +12,13 @@ jobs:
       - uses: actions/setup-node@v1
         with: 
           node-version: 14.x
+      - run: cd ./frontend && yarn install
       - run: make frontend-build
       - uses: actions/upload-artifact@master
         with:
           name: js-bundle
           path: frontend/static/frontend/main.js
-  test:
+  api:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
