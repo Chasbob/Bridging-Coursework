@@ -84,7 +84,12 @@ export default function Login() {
   if (authenticated) {
     return (
       <div>
-        <a href={url} className="is-link is-family-code" onClick={handelLogout}>
+        <a
+          href={url}
+          name="logout"
+          className="is-link is-family-code"
+          onClick={handelLogout}
+        >
           Logout
         </a>
       </div>
@@ -93,6 +98,7 @@ export default function Login() {
   return (
     <div>
       <a
+        name="login"
         href={url}
         className="is-link is-family-code"
         onClick={handleModalOpen}
@@ -168,6 +174,7 @@ function LoginForm({ onSubmit, onClose, notification, setNotification }) {
             <div className="control">
               <input
                 className="button is-primary"
+                name="login-submit"
                 type="submit"
                 value="Submit"
               ></input>
