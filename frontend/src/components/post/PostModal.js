@@ -5,13 +5,18 @@ import Notification from "../Notification"
 export default function PostModal({ onSubmit, onClose, data }) {
   const [notification, setNotification] = useState(false)
   const [form, setForm] = useState(
-    data || {
-      title: "",
-      text: "",
-      created_date: new Date(),
-      published_date: new Date(),
-      author: 0,
-    }
+    data !== undefined
+      ? data
+      : {
+          title: "",
+          text: "",
+          created_date: new Date(),
+          published_date: new Date(),
+          author:
+            localStorage.getItem("user") !== null
+              ? JSON.parse(localStorage.getItem("user")).pk
+              : 0,
+        }
   )
 
   const handleSubmit = event => {
@@ -95,6 +100,7 @@ export default function PostModal({ onSubmit, onClose, data }) {
             <div className="control">
               <input
                 className="button is-primary is-inverted"
+                name="post-submit"
                 type="submit"
                 value="Submit"
               ></input>
