@@ -42,3 +42,7 @@ $(CERT_DIR):
 		localhost \
 		$(API_HOST) \
 		$(LISTEN_HOST)
+
+.PHONY: test
+test:
+	poetry run python manage.py test

@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 from .models import Post
-from .serializers import *
+from .serializers import PostSerializer
 
 logger = logging.getLogger(__name__)
 
