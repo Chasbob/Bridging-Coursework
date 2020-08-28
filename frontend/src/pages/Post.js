@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { get } from "../utils/fetcher"
 import ReactMarkdown from "react-markdown"
 import CodeBlock from "../components/CodeBlock"
+import { Helmet } from "react-helmet-async"
 
 import useSWR from "swr"
 
@@ -18,10 +19,13 @@ export default function Post() {
   if (!post) {
     return (
       <section className="section">
+        <Helmet>
+          <title>Important Things - Post</title>
+        </Helmet>
         <div className="container">
           <div className="level">
             <div className="level-item">
-              <button className="button is-large is-loading " />
+              <button className="button is-large is-loading" />
             </div>
           </div>
         </div>
@@ -30,6 +34,9 @@ export default function Post() {
   }
   return (
     <section className="section">
+      <Helmet>
+        <title>Important Things - Post: {post.title}</title>
+      </Helmet>
       <div className="container">
         <div className="content">
           <h1 className="title is-family-sans-serif is-capitalized">

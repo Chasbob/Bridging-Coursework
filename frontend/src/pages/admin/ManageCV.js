@@ -3,6 +3,7 @@ import useSWR, { mutate } from "swr"
 import { post, remove, put, get } from "../../utils/fetcher"
 import ItemModal from "../../components/cv/ItemModal"
 import CRUD from "../../components/CRUD"
+import { Helmet } from "react-helmet-async"
 
 import { FaPlusCircle } from "react-icons/fa"
 export default function ManageCV() {
@@ -54,6 +55,9 @@ export default function ManageCV() {
 
   return (
     <div>
+      <Helmet>
+        <title>Important Things - Admin: CV</title>
+      </Helmet>
       {modalActive && (
         <ItemModal onSubmit={handleModalSubmit} onClose={handleModalClose} />
       )}
