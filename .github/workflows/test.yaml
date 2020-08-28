@@ -34,6 +34,12 @@ jobs:
         run: poetry --help
       - name: Install Dependencies
         run: poetry install
+      - name: Get geckodriver
+        run: |
+          wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz
+          tar -x geckodriver -zf geckodriver-v0.27.0-linux64.tar.gz -O > ./bin/geckodriver'
+          chmod +x geckodriver
+          export PATH=$PATH:$PWD/bin
       - run: make test
         env:
           SECRET_KEY: test-key
