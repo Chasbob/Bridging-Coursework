@@ -36,9 +36,10 @@ jobs:
         run: poetry install
       - name: Get geckodriver
         run: |
-          wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz
-          tar -x geckodriver -zf geckodriver-v0.27.0-linux64.tar.gz -O > ./bin/geckodriver'
-          chmod +x geckodriver
+          wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -O geckodriver.tar.gz          wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -O geckodriver.tar.gz
+          mkdir -p ./bin
+          tar -xvf geckodriver.tar.gz -O > ./bin/geckodriver
+          chmod +x ./bin/geckodriver
           export PATH=$PATH:$PWD/bin
       - run: make test
         env:
