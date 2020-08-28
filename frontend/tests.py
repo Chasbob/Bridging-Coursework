@@ -17,14 +17,13 @@ class MySeleniumTests(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         options = Options()
-        options.set_headless(True)
+        # options.set_headless(True)
         if os.getenv('WEBDRIVER_HOST'):
             cls.selenium = webdriver.Remote(
                 command_executor=os.getenv('WEBDRIVER_HOST'),
-                desired_capabilities=DesiredCapabilities.FIREFOX, options=options)
+                options=options)
         else:
             cls.selenium = WebDriver(options=options)
-        # cls.selenium = WebDriver(options=options)
         cls.selenium.implicitly_wait(10)
         cls.timeout = 2
         user = User.objects.create(username='testuser')
