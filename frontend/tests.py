@@ -14,7 +14,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
         super().setUpClass()
         options = Options()
         options.set_headless(True)
-        cls.selenium = WebDriver(options=options)
+        cls.selenium = WebDriver()
         cls.selenium.implicitly_wait(10)
 
     @classmethod
