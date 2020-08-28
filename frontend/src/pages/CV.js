@@ -1,5 +1,6 @@
 import React from "react"
 import useSWR from "swr"
+import { Helmet } from "react-helmet-async"
 import { get } from "../utils/fetcher"
 
 import Item from "../components/cv/Item"
@@ -27,6 +28,9 @@ export default function CV() {
   })
   return (
     <section className="section">
+      <Helmet>
+        <title>Important Things - CV</title>
+      </Helmet>
       <div className="container">
         <div className="tile is-ancestor is-vertical">
           <div className="tile is-parent is-vertical">

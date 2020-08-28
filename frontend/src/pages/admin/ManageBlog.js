@@ -6,6 +6,7 @@ import PostModal from "../../components/post/PostModal"
 import { FaPlusCircle } from "react-icons/fa"
 import moment from "moment"
 import { remove, put } from "../../utils/fetcher"
+import { Helmet } from "react-helmet-async"
 
 export default function ManageBlog() {
   const { data: authenticated } = useSWR("authenticated", () =>
@@ -49,6 +50,9 @@ export default function ManageBlog() {
 
   return (
     <div>
+      <Helmet>
+        <title>Important Things - Admin: Blog</title>
+      </Helmet>
       {modalActive && (
         <PostModal onSubmit={handleModalSubmit} onClose={handleModalClose} />
       )}
