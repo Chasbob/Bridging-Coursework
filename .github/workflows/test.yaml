@@ -19,6 +19,7 @@ jobs:
           name: js-bundle
           path: frontend/static/frontend/main.js
   api:
+    needs: frontend
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
