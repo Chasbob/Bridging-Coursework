@@ -26,8 +26,7 @@ export default function ManageCV() {
     mutate("/api/cv/")
     setModalActive(false)
   }
-  const toItems = async endpoint => {
-    let json = await get(endpoint)
+  const toItems = json => {
     let output = {}
     types.forEach(element => {
       output[element.name] = json
@@ -37,18 +36,19 @@ export default function ManageCV() {
     return output
   }
   const { data: types } = useSWR("/api/cv/types/", get)
-  const { data: items } = useSWR(types ? "/api/cv/" : null, toItems, {
+  const { data: items } = useSWR(types ? "/api/cv/" : null, get, {
     initialData: [],
     revalidateOnMount: true,
   })
+  const cards = types ? toItems(items) : {}
   const [modalActive, setModalActive] = useState(false)
-  const columns = Object.keys(items).map(col => {
+  const columns = Object.keys(cards).map(col => {
     return (
       <div key={col} className="column">
         <article className="notification is-primary py-3">
           <p className="title is-family-primary">{col}</p>
         </article>
-        {items[col]}
+        {cards[col]}
       </div>
     )
   })

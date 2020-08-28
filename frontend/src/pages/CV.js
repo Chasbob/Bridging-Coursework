@@ -6,8 +6,7 @@ import { get } from "../utils/fetcher"
 import Item from "../components/cv/Item"
 
 export default function CV() {
-  const toItems = async endpoint => {
-    let json = await get(endpoint)
+  const toItems = json => {
     let output = {}
     types.forEach(element => {
       output[element.name] = json
@@ -21,13 +20,14 @@ export default function CV() {
     initialData: [],
     revalidateOnMount: true,
   })
-  const columns = Object.keys(items).map(col => {
+  const cards = types ? toItems(items) : {}
+  const columns = Object.keys(cards).map(col => {
     return (
       <div key={col} className="column">
         <article className="notification is-primary py-3">
           <p className="title is-family-primary">{col}</p>
         </article>
-        {items[col]}
+        {cards[col]}
       </div>
     )
   })
