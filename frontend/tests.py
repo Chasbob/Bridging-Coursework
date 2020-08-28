@@ -12,6 +12,7 @@ from selenium.webdriver.common.by import By
 
 from time import sleep
 class MySeleniumTests(StaticLiveServerTestCase):
+    fixtures = ['fixtures.json']
 
     @classmethod
     def setUpClass(cls):
