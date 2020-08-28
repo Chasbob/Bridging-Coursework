@@ -40,10 +40,8 @@ def post_detail(request, pk):
     try:
         if is_integer(pk):
             data = Post.objects.get(pk=pk)
-            logger.warning(f'data by pk={pk} data={data}')
         else:
             data = Post.objects.get(title=re.sub(r'-', ' ', pk))
-            logger.warning(f'data by title={pk} data={data}')
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
