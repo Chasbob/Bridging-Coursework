@@ -21,9 +21,9 @@ class MySeleniumTests(StaticLiveServerTestCase):
         if os.getenv('WEBDRIVER_HOST'):
             cls.selenium = webdriver.Remote(
                 command_executor=os.getenv('WEBDRIVER_HOST'),
-                desired_capabilities=DesiredCapabilities.FIREFOX)
+                desired_capabilities=DesiredCapabilities.FIREFOX, options=options)
         else:
-            cls.selenium = WebDriver()
+            cls.selenium = WebDriver(options=options)
         # cls.selenium = WebDriver(options=options)
         cls.selenium.implicitly_wait(10)
         cls.timeout = 2
