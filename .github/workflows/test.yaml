@@ -21,6 +21,21 @@ jobs:
   api:
     needs: frontend
     runs-on: ubuntu-18.04
+    container:
+      image: node:14.4
+      options: --network-alias testHost
+    env:
+      NODE_ENV: test
+      SELENIUM_HUB_HOST: hub
+      TEST_HOST: testHost
+    services:
+      hub:
+        image: selenium/hub:3.141.59-gold
+      firefox:
+        image: selenium/node-firefox:3.141.59-gold
+        env:
+          HUB_HOST: hub
+          HUB_PORT: 4444
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -34,13 +49,7 @@ jobs:
         run: poetry --help
       - name: Install Dependencies
         run: poetry install
-      - name: Get geckodriver
-        run: |
-          wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -O geckodriver.tar.gz          wget https://github.com/mozilla/geckodriver/releases/download/v0.27.0/geckodriver-v0.27.0-linux64.tar.gz -O geckodriver.tar.gz
-          mkdir -p ./bin
-          tar -xvf geckodriver.tar.gz -O > ./bin/geckodriver
-          chmod +x ./bin/geckodriver
-          export PATH=$PATH:$PWD/bin
       - run: make test
         env:
           SECRET_KEY: test-key
+          WEBDRIVER_HOST: http://hub:4444/wd/hub

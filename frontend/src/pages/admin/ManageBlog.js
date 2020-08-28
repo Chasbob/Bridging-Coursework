@@ -59,6 +59,7 @@ export default function ManageBlog() {
       <section className="section">
         <div className="container">
           <button
+            name="post-new"
             className="button is-block is-primary is-outlined"
             onClick={handleModalOpen}
           >

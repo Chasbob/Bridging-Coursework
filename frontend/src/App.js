@@ -7,7 +7,6 @@ import {
   Redirect,
 } from "react-router-dom"
 import useSWR, { SWRConfig } from "swr"
-import { Helmet } from "react-helmet-async"
 
 import Nav from "./components/Nav"
 import Hero from "./components/Hero"
@@ -25,7 +24,7 @@ export default function App() {
     "authenticated",
     () => (localStorage.getItem("token") !== null ? true : false),
     {
-      initialData: "",
+      initialData: localStorage.getItem("token") !== null ? true : false,
       revalidateOnMount: true,
     }
   )
@@ -45,19 +44,6 @@ export default function App() {
   }
   return (
     <SWRConfig value={config}>
-      <Helmet>
-        <meta charset="utf-8" />
-        <link rel="icon" href={process.env.PUBLIC_URL + "/favicon.ico"} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#1abc9c" />
-        <meta name="description" content="Super high production blog" />
-        <link
-          rel="apple-touch-icon"
-          href={process.env.PUBLIC_URL + "/logo192.png"}
-        />
-        <link rel="manifest" href={process.env.PUBLIC_URL + "/manifest.json"} />
-        <title>Important Things</title>
-      </Helmet>
       <Router>
         <div className="main">
           <Nav authenticated={authenticated} />

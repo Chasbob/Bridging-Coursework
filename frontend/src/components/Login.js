@@ -53,7 +53,7 @@ export default function Login() {
         localStorage.setItem("token", json.access)
         mutate("authenticated")
       })
-      .catch(e => console.error("refresh", e))
+      .catch(() => {})
   }
 
   useSWR(
