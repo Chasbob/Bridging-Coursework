@@ -64,6 +64,7 @@ export default function ManageCV() {
       <section className="section">
         <div className="container">
           <button
+            name="item-new"
             className="button is-block is-primary is-outlined"
             onClick={handleModalOpen}
           >
