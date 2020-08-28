@@ -16,13 +16,15 @@ export default function ItemModal({ onSubmit, onClose, data }) {
     )
   })
   const [form, setForm] = useState(
-    data || {
-      title: "",
-      description: "",
-      location: "",
-      category: 1,
-      icon: "FaBookmark",
-    }
+    data !== undefined
+      ? data
+      : {
+          title: "",
+          description: "",
+          location: "",
+          category: 1,
+          icon: "FaBookmark",
+        }
   )
   const icons = Object.keys(FA).map(key => {
     return (
@@ -91,7 +93,7 @@ export default function ItemModal({ onSubmit, onClose, data }) {
             <label className="label">Category</label>
             <div className="control">
               <select
-                name="category"
+                name="item-category"
                 className="input"
                 type="select"
                 value={form.category}
@@ -118,6 +120,7 @@ export default function ItemModal({ onSubmit, onClose, data }) {
           <div className="field">
             <div className="control">
               <input
+                name="item-submit"
                 className="button is-primary is-inverted"
                 type="submit"
                 value="Submit"

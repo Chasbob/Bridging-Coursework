@@ -62,6 +62,16 @@ class MySeleniumTests(StaticLiveServerTestCase):
         self.selenium.find_element_by_name('post-submit').click()
 
 
+    def create_new_cv_item(self, title, description, location):
+        title_input = self.selenium.find_element(By.XPATH, '//input[@name="title"]')
+        title_input.send_keys(title)
+        description_input = self.selenium.find_element(By.XPATH, '//textarea[@name="description"]')
+        description_input.send_keys(description)
+        location_input = self.selenium.find_element(By.XPATH, '//input[@name="location"]')
+        location_input.send_keys(description)
+        self.selenium.find_element_by_name('item-submit').click()
+
+
     def test_login(self):
         self.do_login()
 
@@ -94,6 +104,17 @@ class MySeleniumTests(StaticLiveServerTestCase):
 
         self.selenium.get(f'{self.live_server_url}/admin/blog')
         self.selenium.find_element_by_name('post-new').click()
-        self.create_new_post(title='title', text='text')
+        self.create_new_post(title='Amazing post', text='nothing')
+        title = self.selenium.find_element(By.XPATH, '//p[@class="card-header-title"]')
+        self.assertEqual(title.text, 'Amazing post')
+
+
+    def test_add_cv_item(self):
+        self.selenium.get(f'{self.live_server_url}')
+        self.do_login()
+
+        self.selenium.get(f'{self.live_server_url}/admin/cv')
+        self.selenium.find_element_by_name('item-new').click()
+        self.create_new_cv_item(title='title', description='description', location='location')
         title = self.selenium.find_element(By.XPATH, '//p[@class="card-header-title"]')
         self.assertEqual(title.text, 'title')
