@@ -43,7 +43,7 @@ async function base(endpoint, content, token, method) {
     })
   }
   if (resp.ok) {
-    if (resp.headers.get("Content-Length") === 2) {
+    if (resp.status === 204) {
       return {}
     }
     let json = await resp.json().catch(e => {

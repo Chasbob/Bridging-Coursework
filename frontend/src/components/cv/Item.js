@@ -10,7 +10,9 @@ export default function Item({ item }) {
         <div className="card-header-icon">
           <Icon tag={item.icon} />
         </div>
-        <p className="card-header-title is-family-sans-serif">{item.title}</p>
+        <p className="card-header-title is-family-sans-serif pl-0">
+          {item.title}
+        </p>
         <div className="card-header-icon is-hidden-mobile">
           <p className="px-3 is-family-code">{item.location} </p>
           <FA.FaMapMarkerAlt />
@@ -24,6 +26,14 @@ export default function Item({ item }) {
           {item.description}
         </ReactMarkdown>
       </div>
+
+      {item.link !== "" && (
+        <div className="card-footer">
+          <a className="has-text pl-2 card-footer-item" href={item.link}>
+            <span>{item.link}</span>
+          </a>
+        </div>
+      )}
     </div>
   )
 }

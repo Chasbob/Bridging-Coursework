@@ -24,6 +24,7 @@ export default function ItemModal({ onSubmit, onClose, data }) {
       : {
           title: "",
           description: "",
+          link: "",
           location: "",
           category: 1,
           icon: "FaBookmark",
@@ -98,6 +99,19 @@ export default function ItemModal({ onSubmit, onClose, data }) {
                 type="text"
                 placeholder="Everywhere!"
                 value={form.location}
+                onChange={handleInputChange}
+              ></input>
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Link</label>
+            <div className="control">
+              <input
+                name="link"
+                className="input"
+                type="text"
+                placeholder="https://github.com/me/my-awesome-project"
+                value={form.link}
                 onChange={handleInputChange}
               ></input>
             </div>
