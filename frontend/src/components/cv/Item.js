@@ -18,13 +18,12 @@ export default function Item({ item }) {
           <FA.FaMapMarkerAlt />
         </div>
       </header>
-      <div className="card-content">
+      <div className="card-content content">
         <ReactMarkdown
           className="text has-text-left is-family-primary"
           renderers={{ code: CodeBlock }}
-        >
-          {item.description}
-        </ReactMarkdown>
+          source={item.description}
+        />
       </div>
 
       {item.link !== "" && (
