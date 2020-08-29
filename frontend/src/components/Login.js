@@ -67,18 +67,14 @@ export default function Login() {
 
   const handelModalSubmit = async form => {
     setNotification(null)
-    await post("api/auth/login/", form, false)
-      .then(json => {
-        localStorage.setItem("token", json.access_token)
-        localStorage.setItem("refresh", json.refresh_token)
-        localStorage.setItem("user", JSON.stringify(json.user))
-        mutate("token")
-        mutate("refresh")
-        mutate("authenticated")
-        setModalActive(false)
-      })
-      .catch(e => e.response.text())
-      .then(t => setNotification(t))
+    await post("api/auth/login/", form, false).then(json => {
+      localStorage.setItem("token", json.access_token)
+      localStorage.setItem("refresh", json.refresh_token)
+      localStorage.setItem("user", JSON.stringify(json.user))
+      mutate("token")
+      mutate("refresh")
+      // mutate("authenticated")
+    })
   }
 
   if (authenticated) {
@@ -118,6 +114,7 @@ export default function Login() {
 }
 
 function LoginForm({ onSubmit, onClose, notification, setNotification }) {
+  const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -125,8 +122,12 @@ function LoginForm({ onSubmit, onClose, notification, setNotification }) {
 
   const handleSubmit = event => {
     event.preventDefault()
+    setLoading(true)
     if (onSubmit) {
       onSubmit(form)
+        .then(() => mutate("authenticated"))
+        .catch(e => e.response.text())
+        .then(t => setNotification(t))
     }
   }
 
@@ -172,12 +173,14 @@ function LoginForm({ onSubmit, onClose, notification, setNotification }) {
           </div>
           <div className="field">
             <div className="control">
-              <input
-                className="button is-primary"
+              <button
+                className={`button is-primary ${loading ? "is-loading" : ""}`}
                 name="login-submit"
                 type="submit"
                 value="Submit"
-              ></input>
+              >
+                Submit
+              </button>
             </div>
           </div>
         </form>
