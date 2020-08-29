@@ -5,30 +5,24 @@ import Notification from "./Notification"
 
 export default function Login() {
   const url = null
+
   const { data: authenticated } = useSWR(
     "authenticated",
     () => (localStorage.getItem("token") !== null ? true : false),
     {
-      initialData: "",
+      initialData: false,
       revalidateOnMount: true,
     }
   )
-  const { data: token } = useSWR(
-    authenticated ? "token" : null,
-    () => localStorage.getItem("token"),
-    {
-      initialData: "",
-      revalidateOnMount: true,
-    }
-  )
-  const { data: refresh } = useSWR(
-    authenticated ? "refresh" : null,
-    () => localStorage.getItem("refresh"),
-    {
-      initialData: "",
-      revalidateOnMount: true,
-    }
-  )
+
+  useSWR(authenticated ? "token" : null, () => localStorage.getItem("token"), {
+    onSuccess: async data => {
+      post("api/auth/token/verify/", { token: data }, false)
+        .then(() => {})
+        .catch(handelRefresh)
+    },
+  })
+
   const [modalActive, setModalActive] = useState(false)
   const handleModalOpen = () => {
     setModalActive(true)
@@ -39,7 +33,6 @@ export default function Login() {
   }
 
   const handelLogout = async () => {
-    await post("api/auth/logout/", false, false)
     localStorage.clear()
     mutate("authenticated")
     mutate("token")
@@ -47,23 +40,17 @@ export default function Login() {
   }
 
   const handelRefresh = async () => {
-    await post("api/auth/token/refresh/", { refresh: refresh }, false)
+    await post(
+      "api/auth/token/refresh/",
+      { refresh: localStorage.getItem("refresh") },
+      false
+    )
       .then(json => {
         localStorage.setItem("token", json.access)
-        mutate("authenticated")
         mutate("token")
       })
-      .catch(() => {})
+      .catch(handelLogout)
   }
-
-  useSWR(
-    token !== "" ? ["api/auth/token/verify/", { token: token }, false] : null,
-    post,
-    {
-      revalidateOnMount: true,
-      onError: handelRefresh,
-    }
-  )
 
   const handelModalSubmit = async form => {
     await post("api/auth/login/", form, false).then(json => {
@@ -71,8 +58,6 @@ export default function Login() {
       localStorage.setItem("refresh", json.refresh_token)
       localStorage.setItem("user", JSON.stringify(json.user))
       mutate("token")
-      mutate("refresh")
-      // mutate("authenticated")
     })
   }
 
