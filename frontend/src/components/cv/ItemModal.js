@@ -2,8 +2,11 @@ import React, { useState } from "react"
 import useSWR from "swr"
 import { get } from "../../utils/fetcher"
 import * as FA from "react-icons/fa"
+import Notification from "../Notification"
 
 export default function ItemModal({ onSubmit, onClose, data }) {
+  const [notification, setNotification] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { data: types } = useSWR("api/cv/types/", get, {
     initialData: [],
     revalidateOnMount: true,
@@ -36,8 +39,14 @@ export default function ItemModal({ onSubmit, onClose, data }) {
 
   const handleSubmit = event => {
     event.preventDefault()
+    setLoading(true)
     if (onSubmit) {
       onSubmit(form)
+        .then(onClose)
+        .catch(e => {
+          setLoading(false)
+          e.response.text().then(t => setNotification(t))
+        })
     }
   }
 
@@ -49,6 +58,10 @@ export default function ItemModal({ onSubmit, onClose, data }) {
     <div className="modal is-active">
       <div className="modal-background" onClick={onClose}></div>
       <div className="modal-content">
+        <Notification
+          notification={notification}
+          setNotification={setNotification}
+        />
         <form className="box" onSubmit={handleSubmit}>
           <h1 className="title">Create Item</h1>
           <div className="field">
@@ -119,12 +132,14 @@ export default function ItemModal({ onSubmit, onClose, data }) {
           </div>
           <div className="field">
             <div className="control">
-              <input
+              <button
                 name="item-submit"
-                className="button is-primary is-inverted"
+                className={`button is-primary ${loading ? "is-loading" : ""}`}
                 type="submit"
                 value="Submit"
-              ></input>
+              >
+                Submit
+              </button>
             </div>
           </div>
         </form>

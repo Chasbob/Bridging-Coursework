@@ -24,10 +24,8 @@ export default function ManageCV() {
   const handleModalSubmit = async form => {
     await post("/api/cv/", form, token)
     mutate("/api/cv/")
-    setModalActive(false)
   }
   const toItems = () => {
-    console.log("toItems")
     let output = {}
     types.forEach(element => {
       output[element.name] = items
@@ -96,9 +94,8 @@ function CVCRUD({ data, token }) {
   }
 
   const handleModalSubmit = async form => {
-    await put(`/api/cv/${data.id}/`, form, token).catch(e => {})
-    mutate("/api/cv/")
-    setModalActive(false)
+    await put(`/api/cv/${data.id}/`, form, token).catch(() => {})
+    // mutate("/api/cv/")
   }
   const handleDelete = async () => {
     await remove(`/api/cv/${data.id}/`, token)

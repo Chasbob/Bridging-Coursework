@@ -30,7 +30,6 @@ export default function Login() {
     }
   )
   const [modalActive, setModalActive] = useState(false)
-  const [notification, setNotification] = useState(false)
   const handleModalOpen = () => {
     setModalActive(true)
   }
@@ -66,7 +65,6 @@ export default function Login() {
   )
 
   const handelModalSubmit = async form => {
-    setNotification(null)
     await post("api/auth/login/", form, false).then(json => {
       localStorage.setItem("token", json.access_token)
       localStorage.setItem("refresh", json.refresh_token)
@@ -102,18 +100,14 @@ export default function Login() {
         Login
       </a>
       {modalActive && (
-        <LoginForm
-          onSubmit={handelModalSubmit}
-          onClose={handleModalClose}
-          notification={notification}
-          setNotification={setNotification}
-        />
+        <LoginForm onSubmit={handelModalSubmit} onClose={handleModalClose} />
       )}
     </div>
   )
 }
 
-function LoginForm({ onSubmit, onClose, notification, setNotification }) {
+function LoginForm({ onSubmit, onClose }) {
+  const [notification, setNotification] = useState(false)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
     username: "",
@@ -122,12 +116,15 @@ function LoginForm({ onSubmit, onClose, notification, setNotification }) {
 
   const handleSubmit = event => {
     event.preventDefault()
+    setNotification(false)
     setLoading(true)
     if (onSubmit) {
       onSubmit(form)
         .then(() => mutate("authenticated"))
-        .catch(e => e.response.text())
-        .then(t => setNotification(t))
+        .catch(e => {
+          setLoading(false)
+          e.response.text().then(t => setNotification(t))
+        })
     }
   }
 
