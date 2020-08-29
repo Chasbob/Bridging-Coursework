@@ -38,7 +38,6 @@ export default function ManageBlog() {
     }
     await post("/api/blog/", form, token)
     mutate("/api/blog/")
-    setModalActive(false)
   }
   const cruds = posts.map(item => {
     item.created_date = moment(new Date(item.created_date)).format("YYYY-MM-DD")

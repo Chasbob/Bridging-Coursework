@@ -4,6 +4,7 @@ import Notification from "../Notification"
 
 export default function PostModal({ onSubmit, onClose, data }) {
   const [notification, setNotification] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [form, setForm] = useState(
     data !== undefined
       ? data
@@ -28,8 +29,11 @@ export default function PostModal({ onSubmit, onClose, data }) {
       )
       form.created_date = moment(form.created_date).format("YYYY-MM-DD HH:mm")
       onSubmit(form)
-        .catch(e => e.response.text())
-        .then(t => setNotification(t))
+        .then(onClose)
+        .catch(e => {
+          setLoading(false)
+          e.response.text().then(t => setNotification(t))
+        })
     }
   }
 
@@ -98,12 +102,14 @@ export default function PostModal({ onSubmit, onClose, data }) {
           </div>
           <div className="field">
             <div className="control">
-              <input
-                className="button is-primary is-inverted"
+              <button
+                className={`button is-primary ${loading ? "is-loading" : ""}`}
                 name="post-submit"
                 type="submit"
                 value="Submit"
-              ></input>
+              >
+                Submit
+              </button>
             </div>
           </div>
         </form>
