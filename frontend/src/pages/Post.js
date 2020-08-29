@@ -45,9 +45,8 @@ export default function Post() {
           <ReactMarkdown
             className="text has-text-left is-family-primary"
             renderers={{ code: CodeBlock }}
-          >
-            {post.text}
-          </ReactMarkdown>
+            source={post.text}
+          />
         </div>
       </div>
     </section>
