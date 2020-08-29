@@ -11,3 +11,4 @@ class CVItem(models.Model):
     description = models.TextField()
     icon = models.CharField(max_length=20)
     category = models.ForeignKey(ItemCategory, on_delete=models.CASCADE)
+    link = models.URLField(null=True, blank=True)

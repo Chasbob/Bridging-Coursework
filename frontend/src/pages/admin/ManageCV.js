@@ -101,8 +101,8 @@ function CVCRUD({ data, token }) {
   }
 
   const handleModalSubmit = async form => {
-    await put(`/api/cv/${data.id}/`, form, token).catch(() => {})
-    // mutate("/api/cv/")
+    await put(`/api/cv/${data.id}/`, form, token)
+    mutate("/api/cv/")
   }
   const handleDelete = async () => {
     await remove(`/api/cv/${data.id}/`, token)
