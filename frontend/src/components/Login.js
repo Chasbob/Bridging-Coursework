@@ -51,6 +51,7 @@ export default function Login() {
       .then(json => {
         localStorage.setItem("token", json.access)
         mutate("authenticated")
+        mutate("token")
       })
       .catch(() => {})
   }
