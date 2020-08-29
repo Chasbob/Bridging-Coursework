@@ -106,7 +106,7 @@ export default function ItemModal({ onSubmit, onClose, data }) {
             <label className="label">Category</label>
             <div className="control">
               <select
-                name="item-category"
+                name="category"
                 className="input"
                 type="select"
                 value={form.category}

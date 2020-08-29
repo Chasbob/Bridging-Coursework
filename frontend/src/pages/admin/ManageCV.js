@@ -11,7 +11,14 @@ export default function ManageCV() {
     localStorage.getItem("token") !== null ? true : false
   )
 
-  const [token] = useState(authenticated ? localStorage.getItem("token") : "")
+  const { data: token } = useSWR(
+    authenticated ? "token" : null,
+    () => localStorage.getItem("token"),
+    {
+      initialData: "",
+      revalidateOnMount: true,
+    }
+  )
 
   const handleModalOpen = () => {
     setModalActive(true)
