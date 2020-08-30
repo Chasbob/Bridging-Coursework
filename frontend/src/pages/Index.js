@@ -9,7 +9,7 @@ export default function Index() {
             <div className="content">
               <p className="title is-4 is-family-code is-inline">$ whoami</p>
               <p className="is-family-primary">
-                I am so smart that I sometimes know what I'm doing <span role="img">🥳</span>
+                I am so smart that I sometimes know what I'm doing <span role="img" aria-label="Partying Face">🥳</span>
               </p>
               <Social />
             </div>
