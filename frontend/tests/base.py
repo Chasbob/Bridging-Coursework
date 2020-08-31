@@ -21,6 +21,24 @@ def get_tokens_for_user(user):
 
 class MySeleniumTests(StaticLiveServerTestCase):
     fixtures = ['fixtures.json']
+    selenium: WebDriver
+
+    def do_logout(self):
+        try:
+            logout_button = self.selenium.find_element_by_name('logout')
+            logout_button.click()
+        except Exception as e:
+            pass
+    
+    def do_login(self, username='testuser',password='12345'):
+        self.selenium.find_element_by_name("login").click()
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys(username)
+        password_input = self.selenium.find_element_by_name("password")
+        password_input.send_keys(password)
+        self.selenium.find_element_by_name('login-submit').click()
+        sleep(1)
+
 
     def setUp(self):
         super().setUp()
