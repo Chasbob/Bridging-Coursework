@@ -19,6 +19,7 @@ ReactDOM.render(
         />
         <link rel="manifest" href={process.env.PUBLIC_URL + "/manifest.json"} />
         <link rel="preload" href={process.env.REACT_APP_API_HOST + "/api/cv/"} as="fetch" crossorigin="anonymous" />
+        <link rel="preload" href={process.env.REACT_APP_API_HOST + "/api/blog/"} as="fetch" crossorigin="anonymous" />
         <title>Important Things</title>
       </Helmet>
       <App />
