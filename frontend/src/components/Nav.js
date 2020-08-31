@@ -25,7 +25,6 @@ export default function Nav({ authenticated }) {
         </div>
 
         <div className={`navbar-menu ${active ? "is-active" : ""}`}>
-          <div className="navbar-start"></div>
           <div className="navbar-end">
             <Link className="navbar-item is-tab is-family-code" to="/">
               <span>Home</span>
