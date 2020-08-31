@@ -19,6 +19,8 @@ ReactDOM.render(
         />
         <link rel="manifest" href={process.env.PUBLIC_URL + "/manifest.json"} />
         <title>Important Things</title>
+        ​<​link​ ​rel​="​preload​" ​href​="​/api/blog/" ​as​="​fetch​" ​crossorigin​="​anonymous​"​>
+        ​<​link​ ​rel​="​preload​" ​href​="​/api/cv/" ​as​="​fetch​" ​crossorigin​="​anonymous​"​>
       </Helmet>
       <App />
     </HelmetProvider>
