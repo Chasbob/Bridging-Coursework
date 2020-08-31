@@ -29,7 +29,7 @@ export default function CRUD({
   )
 
   return (
-    <div className="grid-item">
+    <div className="grid-item" id={`${basePath}-${data.id}`}>
       {modalActive && children}
       <div className="card">
         <div className="card-header">

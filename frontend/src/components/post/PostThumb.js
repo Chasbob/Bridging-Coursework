@@ -8,7 +8,7 @@ const formatter = new Intl.DateTimeFormat("en-GB", {
 })
 export default function PostPreview({ post }) {
   return (
-    <div className="my-6" key={post.id}>
+    <div id={`post-preview-${post.id}`} className="my-6" key={post.id}>
       <div className="content">
         <Link to={`/blog/${post.title.replace(/ /g, "-")}`}>
           <p className="is-family-sans-serif title is-4 has-text-link is-capitalized">
