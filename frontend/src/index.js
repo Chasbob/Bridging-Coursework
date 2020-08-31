@@ -18,6 +18,7 @@ ReactDOM.render(
           href={process.env.PUBLIC_URL + "/logo192.png"}
         />
         <link rel="manifest" href={process.env.PUBLIC_URL + "/manifest.json"} />
+        <link rel="preload" href={process.env.REACT_APP_API_HOST + "/api/cv/"} />
         <title>Important Things</title>
       </Helmet>
       <App />
