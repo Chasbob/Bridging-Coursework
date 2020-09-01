@@ -8,12 +8,18 @@ import {
 } from "react-router-dom"
 import useSWR, { SWRConfig } from "swr"
 
-const Nav = lazy(() => import("./components/Nav"))
-const Hero = lazy(() => import("./components/Hero"))
-const Footer = lazy(() => import("./components/Footer"))
+import Nav from "./components/Nav"
+import Hero from "./components/Hero"
+import Footer from "./components/Footer"
+// const Nav = lazy(() => import("./components/Nav"))
+// const Hero = lazy(() => import("./components/Hero"))
+// const Footer = lazy(() => import("./components/Footer"))
 
-const Index = lazy(() => import("./pages/Index"))
-const Post = lazy(() => import("./pages/Post"))
+import Index from "./pages/Index"
+import Post from "./pages/Post"
+
+// const Index = lazy(() => import("./pages/Index"))
+// const Post = lazy(() => import("./pages/Post"))
 const CV = lazy(() => import("./pages/CV"))
 const Blog = lazy(() => import("./pages/Blog"))
 
@@ -47,33 +53,39 @@ export default function App() {
   return (
     <SWRConfig value={config}>
       <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="main">
-            <Nav authenticated={authenticated} />
-            <Switch>
-              <Route exact path="/">
-                <Hero />
-                <Index />
-              </Route>
-              <Route exact path="/admin/blog">
-                {manageBlog}
-              </Route>
-              <Route exact path="/admin/cv">
-                {manageCV}
-              </Route>
+        <div className="main">
+          <Nav authenticated={authenticated} />
+          <Switch>
+            <Route exact path="/">
+              <Hero />
+              <Index />
+            </Route>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<div>loading admin...</div>}>
+                <Route exact path="/admin/blog">
+                  {manageBlog}
+                </Route>
+                <Route exact path="/admin/cv">
+                  {manageCV}
+                </Route>
+              </Suspense>
               <Route exact path="/blog">
-                <Blog />
+                <Suspense fallback={<div>loading blog...</div>}>
+                  <Blog />
+                </Suspense>
               </Route>
               <Route exact path="/cv">
-                <CV />
+                <Suspense fallback={<div>loading cv...</div>}>
+                  <CV />
+                </Suspense>
               </Route>
               <Route exact path="/blog/:postId">
                 <Post />
               </Route>
-            </Switch>
-          </div>
-          <Footer />
-        </Suspense>
+            </Suspense>
+          </Switch>
+        </div>
+        <Footer />
       </Router>
     </SWRConfig>
   )
