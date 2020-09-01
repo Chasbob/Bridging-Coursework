@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import useSWR from "swr"
 import { get } from "../../utils/fetcher"
-import * as FA from "react-icons/fa"
 import Notification from "../Notification"
 
 export default function ItemModal({ onSubmit, onClose, data }) {
@@ -30,13 +29,6 @@ export default function ItemModal({ onSubmit, onClose, data }) {
           icon: "FaBookmark",
         }
   )
-  const icons = Object.keys(FA).map(key => {
-    return (
-      <option key={key} value={key}>
-        {key}
-      </option>
-    )
-  })
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -127,20 +119,6 @@ export default function ItemModal({ onSubmit, onClose, data }) {
                 onChange={handleInputChange}
               >
                 {options}
-              </select>
-            </div>
-          </div>
-          <div className="field">
-            <label className="label">Icon</label>
-            <div className="control">
-              <select
-                name="icon"
-                className="input"
-                type="select"
-                value={form.icon}
-                onChange={handleInputChange}
-              >
-                {icons}
               </select>
             </div>
           </div>
