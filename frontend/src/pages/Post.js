@@ -2,7 +2,6 @@ import React from "react"
 import { useParams } from "react-router-dom"
 import { get } from "../utils/fetcher"
 import ReactMarkdown from "react-markdown"
-import CodeBlock from "../components/CodeBlock"
 import { Helmet } from "react-helmet-async"
 
 import useSWR from "swr"
@@ -44,7 +43,6 @@ export default function Post() {
           </h1>
           <ReactMarkdown
             className="text has-text-left is-family-primary"
-            renderers={{ code: CodeBlock }}
             source={post.text}
           />
         </div>
