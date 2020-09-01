@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense, lazy } from "react"
 import "./App.scss"
 import {
   BrowserRouter as Router,
@@ -8,15 +8,17 @@ import {
 } from "react-router-dom"
 import useSWR, { SWRConfig } from "swr"
 
-import Nav from "./components/Nav"
-import Hero from "./components/Hero"
-import Footer from "./components/Footer"
-import Index from "./pages/Index"
-import Post from "./pages/Post"
-import ManageBlog from "./pages/admin/ManageBlog"
-import ManageCV from "./pages/admin/ManageCV"
-import Blog from "./pages/Blog"
-import CV from "./pages/CV"
+const Nav = lazy(() => import("./components/Nav"))
+const Hero = lazy(() => import("./components/Hero"))
+const Footer = lazy(() => import("./components/Footer"))
+
+const Index = lazy(() => import("./pages/Index"))
+const Post = lazy(() => import("./pages/Post"))
+const CV = lazy(() => import("./pages/CV"))
+const Blog = lazy(() => import("./pages/Blog"))
+
+const ManageBlog = lazy(() => import("./pages/admin/ManageBlog"))
+const ManageCV = lazy(() => import("./pages/admin/ManageCV"))
 
 export default function App() {
   const config = {}
@@ -45,31 +47,33 @@ export default function App() {
   return (
     <SWRConfig value={config}>
       <Router>
-        <div className="main">
-          <Nav authenticated={authenticated} />
-          <Switch>
-            <Route exact path="/">
-              <Hero />
-              <Index />
-            </Route>
-            <Route exact path="/admin/blog">
-              {manageBlog}
-            </Route>
-            <Route exact path="/admin/cv">
-              {manageCV}
-            </Route>
-            <Route exact path="/blog">
-              <Blog />
-            </Route>
-            <Route exact path="/cv">
-              <CV />
-            </Route>
-            <Route exact path="/blog/:postId">
-              <Post />
-            </Route>
-          </Switch>
-        </div>
-        <Footer />
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className="main">
+            <Nav authenticated={authenticated} />
+            <Switch>
+              <Route exact path="/">
+                <Hero />
+                <Index />
+              </Route>
+              <Route exact path="/admin/blog">
+                {manageBlog}
+              </Route>
+              <Route exact path="/admin/cv">
+                {manageCV}
+              </Route>
+              <Route exact path="/blog">
+                <Blog />
+              </Route>
+              <Route exact path="/cv">
+                <CV />
+              </Route>
+              <Route exact path="/blog/:postId">
+                <Post />
+              </Route>
+            </Switch>
+          </div>
+          <Footer />
+        </Suspense>
       </Router>
     </SWRConfig>
   )
