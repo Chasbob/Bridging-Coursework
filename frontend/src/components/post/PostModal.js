@@ -70,6 +70,7 @@ export default function PostModal({ onSubmit, onClose, data }) {
               <textarea
                 name="text"
                 className="textarea"
+                rows="10"
                 placeholder="e.g. Hello world"
                 value={form.text}
                 onChange={handleInputChange}
